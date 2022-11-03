@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -57,6 +58,18 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        print('User is signed in!');
+      }
+    });
+  }
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -67,6 +80,24 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+
+  // Future<void> signInWithGoogle() async {
+  //   // Trigger the authentication flow
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  //   // // Obtain the auth details from the request
+  //   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  //   print('OK');
+  //   // // Create a new credential
+  //   // final credential = GoogleAuthProvider.credential(
+  //   //   accessToken: googleAuth?.accessToken,
+  //   //   idToken: googleAuth?.idToken,
+  //   // );
+
+  //   // // Once signed in, return the UserCredential
+  //   // final test = await FirebaseAuth.instance.signInWithCredential(credential);
+  //   // inspect(test);
+  // }
 
   @override
   Widget build(BuildContext context) {
