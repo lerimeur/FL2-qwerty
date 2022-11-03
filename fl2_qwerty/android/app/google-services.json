@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "189689062891",
+    "firebase_url": "https://fl2qwerty-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "fl2qwerty",
+    "storage_bucket": "fl2qwerty.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189689062891:android:9bea4f934c19f8670165ae",
+        "android_client_info": {
+          "package_name": "com.example.fl2_qwerty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "189689062891-fn83gun44h7j6vsdh0utfbfjrbs5sclq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2f4dvPgNqg7SHtB4zIiKa9ZMK2emtnpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "189689062891-fn83gun44h7j6vsdh0utfbfjrbs5sclq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "189689062891-mf0bqvafmrrb9h0bqk4027b4hrfplcs1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fl2Qwerty"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
