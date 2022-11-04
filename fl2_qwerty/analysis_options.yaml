@@ -1,6 +1,0 @@
-include: package:blackfoot_flutter_lint/blackfoot_flutter.yaml
-
-linter:
-  
-rules:
-    
