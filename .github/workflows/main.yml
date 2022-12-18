@@ -1,27 +1,26 @@
-# Controls when the workflow will run
-# on: [push, pull_request]
+name: Flutter
+
 on:
-#   Triggers the workflow on push or pull request events but only for the main branch
- push:
-   branches: [main]
- pull_request:
-   branches: [main]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-  # Allows you to run this workflow manually from the Actions tab
-#  workflow_dispatch:
-
-  # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    name: flutter test
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v2
+
+      - name: Setup Flutter SDK
+        uses: flutter-actions/setup-flutter@v2
         with:
-          channel: 'stable'
-      - run: flutter pub get
-      - run: flutter analyze
+          channel: stable
+          version: 3.0.2
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze project source
+        run: dart analyze
