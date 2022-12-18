@@ -1,6 +1,8 @@
 import 'package:fl2_qwerty_messenger/Page/home.dart';
 import 'package:fl2_qwerty_messenger/Page/profle.dart';
+import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyBottomBar extends StatefulWidget {
   const MyBottomBar({super.key});
@@ -15,6 +17,12 @@ class MyBottomBarState extends State<MyBottomBar> {
   static const List<Widget> _widgetOptions = <Widget>[Home(), Profil()];
 
   void _onItemTapped(int index) {
+    if (index == 0) {
+      context.read<API>().updateToken('Home');
+    } else {
+      context.read<API>().updateToken('Profile');
+    }
+
     setState(() {
       _selectedIndex = index;
     });
@@ -24,7 +32,7 @@ class MyBottomBarState extends State<MyBottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('fl2_qwerty'),
+        title: Text(context.watch<API>().name),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
