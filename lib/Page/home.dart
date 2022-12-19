@@ -1,3 +1,4 @@
+import 'package:fl2_qwerty_messenger/Component/chat.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -12,11 +13,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Index 0: Message list',
-        style: optionStyle,
-      ),
+    return Column(
+      children: const <Widget>[Chat(), Chat(), Chat(), Chat(), Chat(), Chat()]
     );
   }
 }
