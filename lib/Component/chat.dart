@@ -1,62 +1,55 @@
 import 'package:flutter/material.dart';
 
 class Chat extends StatefulWidget {
-  const Chat({super.key});
+  const Chat({super.key, required this.title, this.lastMessage = '', required this.id, required this.onSelectedChat});
+
+  final String title;
+  final String lastMessage;
+  final String id;
+  final VoidCallback onSelectedChat;
 
   @override
   State<Chat> createState() => _ChatState();
 }
 
 class _ChatState extends State<Chat> {
-  final List<Object> fakeData = <Object>[
-    {"firstName": 'Jean', "lastName": 'Leclerc', "lastMessage": 'Yo, Whats up'},
-    {
-      "firstName": 'Louis',
-      "lastName": 'Dupont',
-      "lastMessage": 'Salut ca va ?'
-    },
-    {
-      "firstName": 'Manon',
-      "lastName": 'Ponutella',
-      "lastMessage": 'Super merci !'
-    },
-    {
-      "firstName": 'Kylian',
-      "lastName": 'Mbappe',
-      "lastMessage": 'J cale un triple en finale y a quoi ?'
-    },
-  ];
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        children: <Widget>[
-          const CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.blue,
-          ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
-                Text(
-                  'Prenom',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'You: Yo whats up !',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black54,
-                  ),
-                )
-              ],
+    return InkWell(
+      onTap: widget.onSelectedChat,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: <Widget>[
+            const CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.blue,
             ),
-          ),
-        ],
+            Container(
+              margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    widget.lastMessage,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black54,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
