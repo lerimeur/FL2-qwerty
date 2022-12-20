@@ -1,8 +1,11 @@
+import 'package:fl2_qwerty_messenger/themes.dart';
 import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Component/bottom_bar.dart';
+import 'Page/message_screen.dart';
+import 'type.dart';
 
 void main() {
   runApp(
@@ -18,10 +21,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: MyBottomBar(),
+      theme: lightThemeData(context),
+      darkTheme: darkThemeData(context),
+      home: MessagesScreen(conv: Conv('test', '12')),
+      // home: MyBottomBar(),
     );
   }
 }

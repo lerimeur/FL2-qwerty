@@ -36,7 +36,10 @@ class ChatInputField extends StatelessWidget {
       child: SafeArea(
         child: Row(
           children: [
-            // Icon(Icons.mic, color: kPrimaryColor),
+            Icon(
+              Icons.photo_camera,
+              color: Theme.of(context).buttonTheme.colorScheme?.primary,
+            ),
             const SizedBox(width: kDefaultPadding),
             Expanded(
               child: Container(
