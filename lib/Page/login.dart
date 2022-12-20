@@ -1,5 +1,5 @@
 import 'package:fl2_qwerty_messenger/Component/button.dart';
-import 'package:fl2_qwerty_messenger/Component/inputText.dart';
+import 'package:fl2_qwerty_messenger/Component/input_text.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -26,11 +26,11 @@ class _LoginState extends State<Login> {
   }
 
   void handleLogin() {
-    print('LOG IN $email $password');
+    // print('LOG IN $email $password');
   }
 
   void goToRegister() {
-    print('Register');
+    // print('Register');
   }
 
   @override

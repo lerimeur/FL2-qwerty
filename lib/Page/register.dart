@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:fl2_qwerty_messenger/Component/button.dart';
-import 'package:fl2_qwerty_messenger/Component/inputText.dart';
+import 'package:fl2_qwerty_messenger/Component/input_text.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -25,7 +25,7 @@ class _RegisterState extends State<Register> {
   }
 
   void goToLogin() {
-    print('Login');
+    // print('Login');
   }
 
   void setMail(String value) {
