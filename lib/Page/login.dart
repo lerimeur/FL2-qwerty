@@ -10,31 +10,59 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  void handleLogin() {
+    print('LOG IN');
+  }
+
+  void goToRegister() {
+    print('Register');
+  }
+
   @override
   Widget build(BuildContext context) {
+    final Container loginForm = Container(
+      margin: const EdgeInsets.only(top: 25),
+      child: Column(
+        children: <Widget>[
+          const InputText(
+            hintText: 'Email',
+          ),
+          const SizedBox(height: 4),
+          const InputText(
+            hintText: 'Mot de passe',
+            password: true,
+          ),
+          const SizedBox(height: 50),
+          Button(label: 'Se Connecter', onPressed: handleLogin),
+          const SizedBox(height: 14),
+          Button(
+            label: 'Créer un nouveau compte',
+            color: const Color.fromARGB(255, 48, 48, 48),
+            onPressed: goToRegister,
+          ),
+        ],
+      ),
+    );
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Spacer(),
-            Text(
+          children: <Widget>[
+            const Spacer(),
+            const Spacer(),
+            const Text(
               'Connecte toi a Messenger !',
+              textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 22, fontWeight: FontWeight.bold, height: 7),
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                height: 1.25,
+              ),
             ),
-            InputText(hintText: 'Email',),
-            SizedBox(height: 4),
-            InputText(hintText: 'Mot de passe', password: true,),
-            SizedBox(height: 50),
-            Button(label: 'Se Connecter'),
-            SizedBox(height: 14),
-            Button(
-              label: 'Créer un nouveau compte',
-              color: Color.fromARGB(255, 48, 48, 48),
-            ),
-            Spacer(),
+            loginForm,
+            const Spacer(),
           ],
         ),
       ),
