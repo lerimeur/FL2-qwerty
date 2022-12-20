@@ -20,7 +20,7 @@ class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      style: ElevatedButton.styleFrom(
+      style: TextButton.styleFrom(
         minimumSize: const Size.fromHeight(50),
         backgroundColor: widget.color,
         shape: RoundedRectangleBorder(
