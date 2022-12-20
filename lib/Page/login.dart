@@ -10,8 +10,23 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String email = '';
+  String password = '';
+
+  void setMail(String value) {
+    setState(() {
+      email = value;
+    });
+  }
+
+  void setPassword(String value) {
+    setState(() {
+      password = value;
+    });
+  }
+
   void handleLogin() {
-    print('LOG IN');
+    print('LOG IN $email $password');
   }
 
   void goToRegister() {
@@ -24,13 +39,19 @@ class _LoginState extends State<Login> {
       margin: const EdgeInsets.only(top: 25),
       child: Column(
         children: <Widget>[
-          const InputText(
+          InputText(
             hintText: 'Email',
+            onChanged: (dynamic value) {
+              setMail(value);
+            },
           ),
           const SizedBox(height: 4),
-          const InputText(
+          InputText(
             hintText: 'Mot de passe',
             password: true,
+            onChanged: (dynamic value) {
+              setPassword(value);
+            },
           ),
           const SizedBox(height: 50),
           Button(label: 'Se Connecter', onPressed: handleLogin),
