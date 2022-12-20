@@ -6,11 +6,14 @@ class InputText extends StatefulWidget {
     this.hintText = '',
     this.password = false,
     required this.onChanged,
+    this.validator,
   });
 
   final String hintText;
   final bool password;
   final ValueChanged onChanged;
+  final String? Function(String?)? validator;
+
 
   @override
   State<InputText> createState() => _InputTextState();
@@ -19,7 +22,8 @@ class InputText extends StatefulWidget {
 class _InputTextState extends State<InputText> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: widget.validator,
       obscureText: widget.password,
       onChanged: widget.onChanged,
       decoration: InputDecoration(

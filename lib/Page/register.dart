@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:fl2_qwerty_messenger/Component/button.dart';
 import 'package:fl2_qwerty_messenger/Component/inputText.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +11,17 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   String email = '';
   String username = '';
   String password = '';
   String confirmPassword = '';
 
   void handleRegister() {
-    print('Register $email $username $password $confirmPassword');
+    if (_formKey.currentState!.validate()) {
+      // Register here
+    }
   }
 
   void goToLogin() {
@@ -47,12 +52,48 @@ class _RegisterState extends State<Register> {
     });
   }
 
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Veuillez remplir ce champ';
+    }
+    if (!EmailValidator.validate(value)) {
+      return 'Veuillez entrer une adresse email valide';
+    }
+    return null;
+  }
+
+  String? validateUsername(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Veuillez entrer un nom d'utilisateur";
+    }
+    return null;
+  }
+
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Veuillez fournir un mot de passe";
+    }
+    if (value.length < 8 || value.length > 30) {
+      return "Veuillez entrer un mot de passe de 8 à 30 caractères";
+    }
+    return null;
+  }
+
+  String? validateComfirmPassword(String? value) {
+    if (value != password) {
+      return 'Les mots de passes ne correspondent pas';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final Form registerForm = Form(
+      key: _formKey,
       child: Column(
-        children: [
+        children: <Widget>[
           InputText(
+            validator: validateEmail,
             hintText: 'Email',
             onChanged: (dynamic value) {
               setMail(value);
@@ -60,6 +101,7 @@ class _RegisterState extends State<Register> {
           ),
           const SizedBox(height: 4),
           InputText(
+            validator: validateUsername,
             hintText: "Nom d'utilisateur",
             onChanged: (dynamic value) {
               setUsername(value);
@@ -67,14 +109,27 @@ class _RegisterState extends State<Register> {
           ),
           const SizedBox(height: 4),
           InputText(
+            validator: validatePassword,
             hintText: 'Mot de passe',
             password: true,
             onChanged: (dynamic value) {
               setPassword(value);
             },
           ),
+          const SizedBox(height: 4),
+          InputText(
+            validator: validateComfirmPassword,
+            hintText: 'Confirmer le mot de passe',
+            password: true,
+            onChanged: (dynamic value) {
+              setConfirmPassword(value);
+            },
+          ),
           const SizedBox(height: 50),
-          Button(label: 'Créer le compte', onPressed: handleRegister),
+          Button(
+            label: 'Créer le compte',
+            onPressed: handleRegister,
+          ),
           const SizedBox(height: 14),
           Button(
             label: 'Se connecter',
