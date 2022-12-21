@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Chat extends StatefulWidget {
-  const Chat({super.key, required this.title, this.lastMessage = '', required this.id, required this.onSelectedChat});
+  const Chat({
+    super.key,
+    required this.title,
+    this.lastMessage = '',
+    required this.id,
+    required this.onSelectedChat,
+  });
 
   final String title;
   final String lastMessage;
@@ -23,7 +29,7 @@ class _ChatState extends State<Chat> {
           children: <Widget>[
             const CircleAvatar(
               radius: 30,
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.grey,
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
