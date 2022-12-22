@@ -1,5 +1,5 @@
 import 'package:fl2_qwerty_messenger/Page/home.dart';
-import 'package:fl2_qwerty_messenger/Page/profle.dart';
+import 'package:fl2_qwerty_messenger/Page/profile.dart';
 import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
