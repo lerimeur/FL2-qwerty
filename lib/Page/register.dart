@@ -6,6 +6,8 @@ import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../Component/bottom_bar.dart';
+
 class Register extends StatefulWidget {
   const Register({super.key});
 
@@ -22,15 +24,19 @@ class _RegisterState extends State<Register> {
   String password = '';
   String confirmPassword = '';
 
-  void handleRegister() {
+  Future<void> handleRegister() async {
     if (_formKey.currentState!.validate()) {
-      // Register here
-      context.read<API>().signin(email, confirmPassword, firstname, lastname);
+      final bool returnvalue = await context.read<API>().signin(email, confirmPassword, firstname, lastname);
+      if (returnvalue) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) => const MyBottomBar()),
+        );
+      }
     }
   }
 
   void goToLogin() {
-    // print('Login');
     Navigator.push(
       context,
       MaterialPageRoute(builder: (BuildContext context) => const Login()),

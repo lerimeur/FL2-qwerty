@@ -3,6 +3,7 @@ import 'package:fl2_qwerty_messenger/Component/input_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../Component/bottom_bar.dart';
 import '../utils.dart';
 
 class Login extends StatefulWidget {
@@ -28,9 +29,15 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void handleLogin() {
+  Future<void> handleLogin() async {
     // print('LOG IN $email $password');
-    context.read<API>().signup(email, password);
+    final bool returnvalue = await context.read<API>().signup(email, password);
+    if (returnvalue) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (BuildContext context) => const MyBottomBar()),
+      );
+    }
   }
 
   void goToRegister() {
