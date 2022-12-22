@@ -1,4 +1,5 @@
 import 'package:fl2_qwerty_messenger/Component/chat.dart';
+import 'package:fl2_qwerty_messenger/Page/message_screen.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,10 @@ class _HomeState extends State<Home> {
 
   void handleSelectedChat(Conversation data) {
     print('Select chat ${data.id}');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => MessagesScreen(conv: data)),
+    );
   }
 
   @override
