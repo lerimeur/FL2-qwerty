@@ -1,4 +1,5 @@
 import 'package:fl2_qwerty_messenger/themes.dart';
+import 'package:fl2_qwerty_messenger/Page/register.dart';
 import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),
-      home: MessagesScreen(conv: Conv('test', '12')),
-      // home: MyBottomBar(),
+      home: Register(),
     );
   }
 }
