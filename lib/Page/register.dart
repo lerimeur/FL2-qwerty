@@ -1,7 +1,10 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:fl2_qwerty_messenger/Component/button.dart';
 import 'package:fl2_qwerty_messenger/Component/input_text.dart';
+import 'package:fl2_qwerty_messenger/Page/login.dart';
+import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -14,18 +17,24 @@ class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String email = '';
-  String username = '';
+  String firstname = '';
+  String lastname = '';
   String password = '';
   String confirmPassword = '';
 
   void handleRegister() {
     if (_formKey.currentState!.validate()) {
       // Register here
+      context.read<API>().signin(email, confirmPassword, firstname, lastname);
     }
   }
 
   void goToLogin() {
     // print('Login');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => const Login()),
+    );
   }
 
   void setMail(String value) {
@@ -34,9 +43,15 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  void setUsername(String value) {
+  void setFirstname(String value) {
     setState(() {
-      username = value;
+      firstname = value;
+    });
+  }
+
+  void setLastname(String value) {
+    setState(() {
+      lastname = value;
     });
   }
 
@@ -62,9 +77,16 @@ class _RegisterState extends State<Register> {
     return null;
   }
 
-  String? validateUsername(String? value) {
+  String? validateFirstname(String? value) {
     if (value == null || value.isEmpty) {
-      return "Veuillez entrer un nom d'utilisateur";
+      return "Veuillez entrer un prénom";
+    }
+    return null;
+  }
+
+  String? validateLastname(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Veuillez entrer un nom";
     }
     return null;
   }
@@ -101,10 +123,18 @@ class _RegisterState extends State<Register> {
           ),
           const SizedBox(height: 4),
           InputText(
-            validator: validateUsername,
-            hintText: "Nom d'utilisateur",
+            validator: validateFirstname,
+            hintText: "Prenom",
             onChanged: (dynamic value) {
-              setUsername(value);
+              setFirstname(value);
+            },
+          ),
+          const SizedBox(height: 4),
+          InputText(
+            validator: validateLastname,
+            hintText: "Nom",
+            onChanged: (dynamic value) {
+              setLastname(value);
             },
           ),
           const SizedBox(height: 4),
@@ -128,7 +158,7 @@ class _RegisterState extends State<Register> {
           const SizedBox(height: 50),
           Button(
             label: 'Créer le compte',
-            onPressed: handleRegister,
+            onPressed: () => handleRegister(),
           ),
           const SizedBox(height: 14),
           Button(

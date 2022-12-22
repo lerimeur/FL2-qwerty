@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 const String endpoint = 'https://flutr.fundy.cf';
-const Map<String, String> headers = <String, String>{
-  "Content-Type": "application/json"
-};
+const Map<String, String> headers = <String, String>{"Content-Type": "application/json"};
 
 Future<http.Response> signup(String email, String password) {
   final String body = jsonEncode(<String, Map<String, String>>{
@@ -104,10 +102,7 @@ Future<http.Response> handleMember(String id, String userId) {
 
 Future<http.Response> newMessage(String conversationId, String content) {
   final String body = jsonEncode(<String, Map<String, String>>{
-    'data': <String, String>{
-      'content': content,
-      'conversationId': conversationId
-    }
+    'data': <String, String>{'content': content, 'conversationId': conversationId}
   });
   return http.post(
     Uri.parse("$endpoint/messages"),
