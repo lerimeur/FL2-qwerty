@@ -79,13 +79,22 @@ class _ProfilState extends State<Profil> {
                 goToRename();
               },
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Nom et prénom',
-                    style: optionStyle,
-                  ),
+                padding: const EdgeInsets.fromLTRB(30, 0, 10, 0),
+                child: Row(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Nom et prénom',
+                        style: optionStyle,
+                      ),
+                    ),
+                    const Spacer(),
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.black26,
+                    )
+                  ],
                 ),
               ),
             ),
