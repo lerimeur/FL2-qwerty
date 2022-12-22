@@ -10,6 +10,10 @@ class Profil extends StatefulWidget {
 }
 
 class _ProfilState extends State<Profil> {
+  final TextStyle optionStyle =
+      const TextStyle(fontSize: 17, color: Colors.black);
+  bool darkMode = false;
+
   void goToRename() {
     Navigator.push(
       context,
@@ -45,17 +49,42 @@ class _ProfilState extends State<Profil> {
           SizedBox(
             width: double.infinity,
             height: 60,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    'Thème sombre',
+                    style: optionStyle,
+                  ),
+                  const Spacer(),
+                  Switch(
+                    activeColor: kPrimaryColor,
+                    value: darkMode,
+                    onChanged: (bool value) {
+                      setState(() {
+                        darkMode = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 60,
             child: InkWell(
               onTap: () {
                 goToRename();
               },
-              child: const Padding(
-                padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Nom et prénom',
-                    style: TextStyle(fontSize: 17, color: Colors.black),
+                    style: optionStyle,
                   ),
                 ),
               ),
