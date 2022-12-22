@@ -14,7 +14,7 @@ class MyBottomBar extends StatefulWidget {
 class MyBottomBarState extends State<MyBottomBar> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[Home(), Profil()];
+  static final List<Widget> _widgetOptions = <Widget>[Home(), const Profil()];
 
   void _onItemTapped(int index) {
     if (index == 0) {
@@ -32,7 +32,8 @@ class MyBottomBarState extends State<MyBottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.watch<API>().name),
+        leading: Container(),
+        title: Text(context.watch<API>().token),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
