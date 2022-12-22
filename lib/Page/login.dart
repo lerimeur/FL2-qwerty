@@ -14,8 +14,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String email = '';
-  String password = '';
+  String email = 'greg@gmail.com';
+  String password = 'test1234';
 
   void setMail(String value) {
     setState(() {
@@ -30,7 +30,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> handleLogin() async {
-    // print('LOG IN $email $password');
+    print('LOG IN $email $password');
     final bool returnvalue = await context.read<API>().signup(email, password);
     if (returnvalue) {
       Navigator.push(
@@ -41,7 +41,6 @@ class _LoginState extends State<Login> {
   }
 
   void goToRegister() {
-    // print('Register');
     Navigator.pop(context);
   }
 

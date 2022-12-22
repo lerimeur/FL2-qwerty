@@ -41,13 +41,16 @@ class Message {
   }
 }
 
-class Conv {
-  // final List<Message> messages;
-
-  Conv(
+class Conversation {
+  Conversation(
     this.title,
+    this.lastMessage,
     this.id,
   );
+
   final String id;
   final String title;
+  final String lastMessage;
+  // final List<Message> messages;
+
 }
