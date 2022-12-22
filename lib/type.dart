@@ -12,19 +12,28 @@ const kDefaultPadding = 20.0;
 User? global_User;
 
 class User {
+  User({
+    required this.id,
+    required this.firstname,
+    required this.lastname,
+    required this.token,
+    required this.profilePicture,
+  });
   final String id;
-  final String username;
+  final String firstname;
+  final String lastname;
+  final String token;
+  final String profilePicture;
 
-  User({required this.id, required this.username});
-  getUsername() => username;
+  String getFirstname() => firstname;
+  String getLastname() => lastname;
 }
 
 class Message {
+  Message(this.mess, this.createdDate, this.sender);
   final String mess;
   final DateTime createdDate;
   final String sender;
-
-  Message(this.mess, this.createdDate, this.sender);
 
   @override
   bool operator ==(other) {

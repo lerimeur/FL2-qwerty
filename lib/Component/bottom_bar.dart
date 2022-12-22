@@ -32,7 +32,7 @@ class MyBottomBarState extends State<MyBottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.watch<API>().name),
+        title: Text(context.watch<API>().token),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

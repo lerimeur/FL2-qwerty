@@ -1,8 +1,7 @@
+import 'package:fl2_qwerty_messenger/Page/register.dart';
 import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'Component/bottom_bar.dart';
 
 void main() {
   runApp(
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: MyBottomBar(),
+      home: Register(),
     );
   }
 }
