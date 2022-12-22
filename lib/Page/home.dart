@@ -10,8 +10,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   final List<Conversation> fakeData = <Conversation>[
     Conversation('Jean Dupont', 'SAlut comment va', '1'),
@@ -23,12 +22,13 @@ class _HomeState extends State<Home> {
     Conversation('Lillian Thuram', 'SAlut comment va', '7'),
     Conversation('Jeanne Darc', 'SAlut comment va', '8'),
     Conversation('Louis Parapluie', 'SAlut comment va', '9'),
-    Conversation('Fred Vase', 'SAlut comment va', '10'),
+    Conversation('Fred Vase', 'Salut comment va', '10'),
   ];
 
-  void handleSelectedChat() {
-    // print('Select chat ${fakeData[index].id}');
+  void handleSelectedChat(Conversation data) {
+    print('Select chat ${data.id}');
   }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
           title: fakeData[index].title,
           lastMessage: fakeData[index].lastMessage,
           id: fakeData[index].id,
-          onSelectedChat: handleSelectedChat,
+          onSelectedChat: () => handleSelectedChat(fakeData[index]),
         );
       },
     );
