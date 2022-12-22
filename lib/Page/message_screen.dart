@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'package:provider/provider.dart';
 // import 'package:chat/Api/Apirequest.dart';
 // import 'package:chat/Screens/Message/textInputchat.dart';
 // import 'package:chat/Screens/Message/text_message.dart';
@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import '../Component/chat_input.dart';
 import '../Component/text_message.dart';
 import '../type.dart';
+import '../utils.dart';
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({Key? key, required this.conv}) : super(key: key);
@@ -38,6 +39,9 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   refresh() {
     print('refresh');
+    setState(() {
+      message_list = widget.conv.messages;
+    });
     // getMessageforaConv(widget.conv.id).then(
     //   (value) => {
     //     if (message_list.isEmpty || value.length > message_list.length) setState(() => {message_list = value})
@@ -68,10 +72,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
     return ListView.builder(
       itemCount: message_list.length,
       itemBuilder: (context, index) {
-        message_list.sort((a, b) {
-          return a.createdDate.compareTo(b.createdDate);
-        });
-        final _sender = message_list[index].sender == global_User!.id;
+        // message_list.sort((a, b) {
+        //   return a.createdDate.compareTo(b.createdDate);
+        // });
+        final _sender = message_list[index].sender == 'greg';
         return Padding(
           padding: const EdgeInsets.only(top: kDefaultPadding),
           child: Row(

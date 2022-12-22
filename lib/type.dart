@@ -42,15 +42,15 @@ class Message {
 }
 
 class Conversation {
-  Conversation(
-    this.title,
-    this.lastMessage,
-    this.id,
-  );
+  Conversation({
+    required this.title,
+    required this.lastMessage,
+    required this.id,
+    required this.messages,
+  });
 
   final String id;
   final String title;
   final String lastMessage;
-  // final List<Message> messages;
-
+  final List<Message> messages;
 }
