@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),
-      home: Register(),
+      home: const Register(),
     );
   }
 }

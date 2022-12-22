@@ -13,7 +13,7 @@ import '../type.dart';
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({Key? key, required this.conv}) : super(key: key);
-  final Conv conv;
+  final Conversation conv;
 
   @override
   State<MessagesScreen> createState() => _MessagesScreenState();

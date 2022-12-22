@@ -13,7 +13,7 @@ class ChatInputField extends StatelessWidget {
   }) : super(key: key);
 
   final Function() fct;
-  final Conv conv;
+  final Conversation conv;
   TextEditingController messageValue = TextEditingController();
 
   @override
@@ -55,6 +55,8 @@ class ChatInputField extends StatelessWidget {
                     const SizedBox(width: kDefaultPadding / 4),
                     Expanded(
                       child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
                         controller: messageValue,
                         decoration: const InputDecoration(
                           hintText: "Type message",
