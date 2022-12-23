@@ -11,7 +11,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   final List<Message> messagelist = <Message>[
     Message('hello1', DateTime.now(), 'greg'),
@@ -22,8 +23,10 @@ class _HomeState extends State<Home> {
         'sinon blab blab blab wperbgpwieurbvpweirubvwpreiujbvwerpiubvwreipuvbrwepivbrpivbjrtuwpviwusrbvpsirubvrptiuvbwrpiuvbrwpivbutwr',
         DateTime.now(),
         'greg'),
-    Message('iluwrbv;iuwrbeptivubwrntbuohwerptiubhwrnpt9ubosrheptbouihrenpbiuserbhnpeiyrtubnerpiyubrpniusrwk',
-        DateTime.now(), 'max'),
+    Message(
+        'iluwrbv;iuwrbeptivubwrntbuohwerptiubhwrnpt9ubosrheptbouihrenpbiuserbhnpeiyrtubnerpiyubrpniusrwk',
+        DateTime.now(),
+        'max'),
     Message('plop', DateTime.now(), 'greg'),
     Message('plop2', DateTime.now(), 'greg'),
     Message('plip1', DateTime.now(), 'max'),
@@ -31,22 +34,28 @@ class _HomeState extends State<Home> {
   ];
 
   final List<Conversation> fakeData = <Conversation>[
-    Conversation(title: 'Jean Dupont', lastMessage: 'SAlut comment va', id: '1', messages: [
-      Message('hello1', DateTime.now(), 'greg'),
-      Message('hello2', DateTime.now(), 'max'),
-      Message('comment vas?', DateTime.now(), 'greg'),
-      Message('trkl et toi', DateTime.now(), 'max'),
-      Message(
-          'sinon blab blab blab wperbgpwieurbvpweirubvwpreiujbvwerpiubvwreipuvbrwepivbrpivbjrtuwpviwusrbvpsirubvrptiuvbwrpiuvbrwpivbutwr',
-          DateTime.now(),
-          'greg'),
-      Message('iluwrbv;iuwrbeptivubwrntbuohwerptiubhwrnpt9ubosrheptbouihrenpbiuserbhnpeiyrtubnerpiyubrpniusrwk',
-          DateTime.now(), 'max'),
-      Message('plop', DateTime.now(), 'greg'),
-      Message('plop2', DateTime.now(), 'greg'),
-      Message('plip1', DateTime.now(), 'max'),
-      Message('plip1', DateTime.now(), 'max'),
-    ]),
+    Conversation(
+        title: 'Jean Dupont',
+        lastMessage: 'SAlut comment va',
+        id: '1',
+        messages: [
+          Message('hello1', DateTime.now(), 'greg'),
+          Message('hello2', DateTime.now(), 'max'),
+          Message('comment vas?', DateTime.now(), 'greg'),
+          Message('trkl et toi', DateTime.now(), 'max'),
+          Message(
+              'sinon blab blab blab wperbgpwieurbvpweirubvwpreiujbvwerpiubvwreipuvbrwepivbrpivbjrtuwpviwusrbvpsirubvrptiuvbwrpiuvbrwpivbutwr',
+              DateTime.now(),
+              'greg'),
+          Message(
+              'iluwrbv;iuwrbeptivubwrntbuohwerptiubhwrnpt9ubosrheptbouihrenpbiuserbhnpeiyrtubnerpiyubrpniusrwk',
+              DateTime.now(),
+              'max'),
+          Message('plop', DateTime.now(), 'greg'),
+          Message('plop2', DateTime.now(), 'greg'),
+          Message('plip1', DateTime.now(), 'max'),
+          Message('plip1', DateTime.now(), 'max'),
+        ]),
     // Conversation(title: 'Pierre Dupont', lastMessage: 'SAlut comment va', id: '2', messages: messagelist),
     // Conversation(title: 'Manon Ponutella', lastMessage: 'SAlut comment va', id: '3', messages: messagelist),
     // Conversation(title: 'Kylian Mbappe', lastMessage: 'SAlut comment va', id: '4', messages: messagelist),
@@ -62,7 +71,8 @@ class _HomeState extends State<Home> {
     print('Select chat ${data.id}');
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (BuildContext context) => MessagesScreen(conv: data)),
+      MaterialPageRoute(
+          builder: (BuildContext context) => MessagesScreen(conv: data)),
     );
   }
 

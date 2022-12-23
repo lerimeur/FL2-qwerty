@@ -20,11 +20,12 @@ class MyBottomBarState extends State<MyBottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[Home(), const Profil()];
 
   void _onItemTapped(int index) {
-    if (index == 0) {
-      context.read<API>().updateToken('Home');
-    } else {
-      context.read<API>().updateToken('Profile');
-    }
+    context.read<API>().getAllUsers();
+    // if (index == 0) {
+    //   context.read<API>().updateToken('Home');
+    // } else {
+    //   context.read<API>().updateToken('Profile');
+    // }
 
     setState(() {
       _selectedIndex = index;
@@ -36,7 +37,7 @@ class MyBottomBarState extends State<MyBottomBar> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        title: Text(context.watch<API>().token),
+        title: Text('context.watch<API>().token'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

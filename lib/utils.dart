@@ -7,12 +7,18 @@ import 'package:http/http.dart' as http;
 
 class API with ChangeNotifier {
   late User user;
-  late String token = '';
   static const String endpoint = 'https://flutr.fundy.cf';
-  static const Map<String, String> headers = <String, String>{"Content-Type": "application/json"};
+  late Map<String, String> headers = <String, String>{
+    "Content-Type": "application/json"
+  };
 
-  void updateToken(String value) {
-    token = value;
+  void updateCookie(http.Response response) {
+    final String? rawCookie = response.headers['set-cookie'];
+    if (rawCookie != null) {
+      final int index = rawCookie.indexOf(';');
+      headers['cookie'] =
+          (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    }
   }
 
   Future<bool> signin(
@@ -28,7 +34,7 @@ class API with ChangeNotifier {
       'lastname': lastname,
     });
 
-    // inspect(body);
+    inspect(body);
 
     try {
       final http.Response data = await http.post(
@@ -36,10 +42,9 @@ class API with ChangeNotifier {
         headers: headers,
         body: body,
       );
+      updateCookie(data);
 
       final tmp = json.decode(data.body);
-
-      // print(data.body);
 
       user = User(
         id: tmp['id'],
@@ -69,9 +74,43 @@ class API with ChangeNotifier {
         headers: headers,
         body: body,
       );
+      updateCookie(data);
       final tmp = json.decode(data.body);
+      inspect(data);
 
       // print(data.body);
+
+      user = User(
+        id: tmp['id'],
+        firstname: tmp['firstname'],
+        lastname: tmp['lastname'],
+        profilePicture: tmp['profilePicture'],
+        token: '',
+      );
+      // tmp['token'],
+      // inspect(user);
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> getAllUsers() async {
+    // final String body = jsonEncode(<String, String>{
+    //   'email': email,
+    //   'password': password,
+    // });
+    try {
+      final data = await http.get(
+        Uri.parse("$endpoint/users"),
+        headers: headers,
+      );
+      updateCookie(data);
+
+      final tmp = json.decode(data.body);
+
+      print(data.body);
 
       user = User(
         id: tmp['id'],
