@@ -1,7 +1,9 @@
 import 'package:fl2_qwerty_messenger/Page/home.dart';
-import 'package:fl2_qwerty_messenger/Page/profle.dart';
+import 'package:fl2_qwerty_messenger/Page/profile.dart';
+import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 
 class MyBottomBar extends StatefulWidget {
   const MyBottomBar({super.key});
@@ -13,9 +15,16 @@ class MyBottomBar extends StatefulWidget {
 class MyBottomBarState extends State<MyBottomBar> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[Home(), Profil()];
+  static final List<Widget> _widgetOptions = <Widget>[Home(), const Profil()];
 
   void _onItemTapped(int index) {
+    context.read<API>().getAllUsers();
+    // if (index == 0) {
+    //   context.read<API>().updateToken('Home');
+    // } else {
+    //   context.read<API>().updateToken('Profile');
+    // }
+
     setState(() {
       _selectedIndex = index;
     });
@@ -85,6 +94,7 @@ class MyBottomBarState extends State<MyBottomBar> {
             ),
           ),
         ),
+        leading: Container(),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

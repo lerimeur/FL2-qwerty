@@ -1,9 +1,16 @@
+import 'package:fl2_qwerty_messenger/Page/register.dart';
+import 'package:fl2_qwerty_messenger/themes.dart';
+import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
-
-import 'Component/tab_bar.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider<API>(
+      create: (_) => API(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -11,10 +18,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Messenger',
-      home: MyBottomBar(),
+      title: 'Flutter Demo',
+      theme: lightThemeData(context),
+      darkTheme: darkThemeData(context),
+      home: const Register(),
     );
   }
 }
