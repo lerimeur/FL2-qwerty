@@ -1,9 +1,11 @@
-import 'dart:developer';
 import 'dart:io';
 
+import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../type.dart';
+
+import 'package:provider/provider.dart';
 
 class ChatInputField extends StatelessWidget {
   ChatInputField(
@@ -77,11 +79,12 @@ class ChatInputField extends StatelessWidget {
               color: Theme.of(context).buttonTheme.colorScheme?.primary,
               textColor: Theme.of(context).textTheme.bodyText1?.color,
               onPressed: () async {
-                // await createMessage(
-                //   messageValue.text,
-                //   global_User?.id,
-                //   conv.id,
-                // );
+                print(messageValue.text.toString());
+
+                context
+                    .read<API>()
+                    .newMessage(conversationId: conv.id.toString(), content: messageValue.text.toString());
+
                 print(messageValue.text);
                 messageValue.text = "";
                 sleep(const Duration(milliseconds: 1));

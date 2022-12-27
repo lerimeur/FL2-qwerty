@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color(0xFF00BF6D);
-const kSecondaryColor = Color(0xFFFE9901);
-const kContentColorLightTheme = Color(0xFF1D1D35);
-const kContentColorDarkTheme = Color(0xFFF5FCF9);
-const kWarninngColor = Color(0xFFF3BB1C);
-const kErrorColor = Color(0xFFF03738);
+const Color kPrimaryColor = Color(0xFF00BF6D);
+const Color kSecondaryColor = Color(0xFFFE9901);
+const Color kContentColorLightTheme = Color(0xFF1D1D35);
+const Color kContentColorDarkTheme = Color(0xFFF5FCF9);
+const Color kWarninngColor = Color(0xFFF3BB1C);
+const Color kErrorColor = Color(0xFFF03738);
 
-const kDefaultPadding = 20.0;
+const double kDefaultPadding = 20.0;
 
 User? global_User;
 
@@ -36,7 +36,7 @@ class Message {
   final String sender;
 
   @override
-  bool operator ==(other) {
+  bool operator ==(Object other) {
     return (other is Message) && other.mess == mess && other.createdDate == createdDate && other.sender == sender;
   }
 }
@@ -52,5 +52,7 @@ class Conversation {
   final String id;
   final String title;
   final String lastMessage;
-  final List<Message> messages;
+  List<Message> messages;
+
+  List<Message> get gettermessages => messages;
 }

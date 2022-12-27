@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
     print('LOG IN $email $password');
     final bool returnvalue = await context.read<API>().signup(email, password);
     if (returnvalue) {
-      Navigator.push(
+      await Navigator.push(
         context,
         MaterialPageRoute(builder: (BuildContext context) => const MyBottomBar()),
       );

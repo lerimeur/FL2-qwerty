@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:provider/provider.dart';
+
 // import 'package:chat/Api/Apirequest.dart';
 // import 'package:chat/Screens/Message/textInputchat.dart';
 // import 'package:chat/Screens/Message/text_message.dart';
@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 import '../Component/chat_input.dart';
 import '../Component/text_message.dart';
 import '../type.dart';
+
 import '../utils.dart';
+import 'package:provider/provider.dart';
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({Key? key, required this.conv}) : super(key: key);
@@ -25,23 +27,34 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   List<Message> message_list = [];
 
+  // final context_tab = context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id);
+
   @override
   void dispose() {
-    timer?.cancel();
     super.dispose();
+    timer?.cancel();
   }
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 2), (Timer t) => refresh());
+    final test = context.read<API>().getOneConversation(widget.conv.id);
+
+    // context.read<API>().
+    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
   }
 
-  refresh() {
+  refresh() async {
     print('refresh');
-    setState(() {
-      message_list = widget.conv.messages;
-    });
+    context.read<API>().getOneConversation(widget.conv.id);
+    // inspect(context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id));
+    // final tmp_conv =
+    // message_list = tmp_conv;
+
+    // inspect(context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id));
+    // setState(() {
+    //   message_list = widget.conv.messages;
+    // });
     // getMessageforaConv(widget.conv.id).then(
     //   (value) => {
     //     if (message_list.isEmpty || value.length > message_list.length) setState(() => {message_list = value})
@@ -51,6 +64,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    message_list = context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id).first.messages;
     return Scaffold(
       appBar: buildAppBar(),
       body: Column(
@@ -68,27 +82,32 @@ class _MessagesScreenState extends State<MessagesScreen> {
   }
 
   Widget listMessage() {
-    if (message_list.isEmpty) return const Center(child: CircularProgressIndicator());
+    if (message_list.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return ListView.builder(
       itemCount: message_list.length,
-      itemBuilder: (context, index) {
-        // message_list.sort((a, b) {
-        //   return a.createdDate.compareTo(b.createdDate);
-        // });
-        final _sender = message_list[index].sender == 'greg';
+      itemBuilder: (BuildContext context, int index) {
+        message_list.sort((a, b) {
+          return a.createdDate.compareTo(b.createdDate);
+        });
+
+        final bool sender = message_list[index].sender == context.read<API>().user.id;
+
         return Padding(
           padding: const EdgeInsets.only(top: kDefaultPadding),
           child: Row(
-            mainAxisAlignment: _sender ? MainAxisAlignment.end : MainAxisAlignment.start,
+            mainAxisAlignment: sender ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
-              if (!_sender) ...[
+              if (!sender) ...[
                 const CircleAvatar(
                   radius: 12,
                   backgroundImage: AssetImage("assets/images/user_2.png"),
                 ),
-                SizedBox(width: kDefaultPadding / 2),
+                const SizedBox(width: kDefaultPadding / 2),
               ],
-              TextMessage(message: message_list[index].mess, sender: _sender)
+              TextMessage(message: message_list[index].mess, sender: sender)
             ],
           ),
         );
@@ -101,19 +120,19 @@ class _MessagesScreenState extends State<MessagesScreen> {
       automaticallyImplyLeading: false,
       title: Row(
         children: [
-          BackButton(),
-          CircleAvatar(
+          const BackButton(),
+          const CircleAvatar(
             backgroundImage: AssetImage("assets/images/user_3.png"),
           ),
-          SizedBox(width: kDefaultPadding * 0.75),
+          const SizedBox(width: kDefaultPadding * 0.75),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget.conv.title,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
-              Text(
+              const Text(
                 "Active 3m ago",
                 style: TextStyle(fontSize: 12),
               )

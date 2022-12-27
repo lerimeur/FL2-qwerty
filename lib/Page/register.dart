@@ -28,7 +28,7 @@ class _RegisterState extends State<Register> {
     if (_formKey.currentState!.validate()) {
       final bool returnvalue = await context.read<API>().signin(email, confirmPassword, firstname, lastname);
       if (returnvalue) {
-        Navigator.push(
+        await Navigator.push(
           context,
           MaterialPageRoute(builder: (BuildContext context) => const MyBottomBar()),
         );

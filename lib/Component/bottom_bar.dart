@@ -1,11 +1,8 @@
 import 'package:fl2_qwerty_messenger/Page/home.dart';
-import 'package:fl2_qwerty_messenger/Page/message_screen.dart';
 import 'package:fl2_qwerty_messenger/Page/profile.dart';
-import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../type.dart';
+import '../utils.dart';
 
 class MyBottomBar extends StatefulWidget {
   const MyBottomBar({super.key});
@@ -17,10 +14,12 @@ class MyBottomBar extends StatefulWidget {
 class MyBottomBarState extends State<MyBottomBar> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[Home(), const Profil()];
+  static final List<Widget> _widgetOptions = <Widget>[const Home(), const Profil()];
 
+// clc6ha71g42470ipdnzfhpplj
   void _onItemTapped(int index) {
-    context.read<API>().getAllUsers();
+    // context.read<API>().getAllUsers();
+
     // if (index == 0) {
     //   context.read<API>().updateToken('Home');
     // } else {
@@ -37,7 +36,7 @@ class MyBottomBarState extends State<MyBottomBar> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        title: Text('context.watch<API>().token'),
+        title: const Text('context.watch<API>().token'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -57,6 +56,13 @@ class MyBottomBarState extends State<MyBottomBar> {
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //   final userid = 'clbyz4ky700480ioekb8nrbsa';
+
+      //   context.read<API>().newConversation(userid);
+      // }
+
+      //     ),
     );
   }
 }
