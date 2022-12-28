@@ -1,19 +1,22 @@
-import 'dart:developer';
 import 'dart:io';
 
+import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../type.dart';
 
-class ChatInputField extends StatelessWidget {
-  ChatInputField(
-    this.conv, {
-    Key? key,
-    required this.fct,
-  }) : super(key: key);
+class ChatInputField extends StatefulWidget {
+  const ChatInputField({Key? key, required this.conv, required this.fct}) : super(key: key);
 
   final Function() fct;
   final Conversation conv;
+
+  @override
+  State<ChatInputField> createState() => _ChatInputFieldState();
+}
+
+class _ChatInputFieldState extends State<ChatInputField> {
   TextEditingController messageValue = TextEditingController();
 
   @override
@@ -25,7 +28,7 @@ class ChatInputField extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
-        boxShadow: [
+        boxShadow: <BoxShadow>[
           BoxShadow(
             offset: const Offset(0, 4),
             blurRadius: 32,
@@ -35,7 +38,7 @@ class ChatInputField extends StatelessWidget {
       ),
       child: SafeArea(
         child: Row(
-          children: [
+          children: <Widget>[
             Icon(
               Icons.photo_camera,
               color: Theme.of(context).buttonTheme.colorScheme?.primary,
@@ -51,7 +54,7 @@ class ChatInputField extends StatelessWidget {
                   borderRadius: BorderRadius.circular(40),
                 ),
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     const SizedBox(width: kDefaultPadding / 4),
                     Expanded(
                       child: TextField(
@@ -77,16 +80,17 @@ class ChatInputField extends StatelessWidget {
               color: Theme.of(context).buttonTheme.colorScheme?.primary,
               textColor: Theme.of(context).textTheme.bodyText1?.color,
               onPressed: () async {
-                // await createMessage(
-                //   messageValue.text,
-                //   global_User?.id,
-                //   conv.id,
-                // );
-                print(messageValue.text);
+                // print(messageValue.text.toString());
+
+                context
+                    .read<API>()
+                    .newMessage(conversationId: widget.conv.id.toString(), content: messageValue.text.toString());
+
+                // print(messageValue.text);
                 messageValue.text = "";
                 sleep(const Duration(milliseconds: 1));
 
-                fct();
+                widget.fct();
               },
               child: const Icon(
                 Icons.arrow_forward_ios,

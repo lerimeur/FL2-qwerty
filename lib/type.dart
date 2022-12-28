@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color(0xFF00BF6D);
-const kSecondaryColor = Color(0xFFFE9901);
-const kContentColorLightTheme = Color(0xFF1D1D35);
-const kContentColorDarkTheme = Color(0xFFF5FCF9);
-const kWarninngColor = Color(0xFFF3BB1C);
-const kErrorColor = Color(0xFFF03738);
+const Color kPrimaryColor = Color(0xFF00BF6D);
+const Color kSecondaryColor = Color(0xFFFE9901);
+const Color kContentColorLightTheme = Color(0xFF1D1D35);
+const Color kContentColorDarkTheme = Color(0xFFF5FCF9);
+const Color kWarninngColor = Color(0xFFF3BB1C);
+const Color kErrorColor = Color(0xFFF03738);
 
-const kDefaultPadding = 20.0;
-
-User? global_User;
+const double kDefaultPadding = 20.0;
 
 class User {
   User({
@@ -30,15 +28,15 @@ class User {
 }
 
 class Message {
-  Message(this.mess, this.createdDate, this.sender);
-  final String mess;
-  final DateTime createdDate;
-  final String sender;
+  Message({required this.content, required this.createdAt, required this.userId});
+  final String content;
+  final DateTime createdAt;
+  final String userId;
 
-  @override
-  bool operator ==(other) {
-    return (other is Message) && other.mess == mess && other.createdDate == createdDate && other.sender == sender;
-  }
+  // @override
+  // bool operator ==(Object other) {
+  //   return (other is Message) && other.content == content && other.createdAt == createdAt && other.userId == userId;
+  // }
 }
 
 class Conversation {
@@ -52,5 +50,7 @@ class Conversation {
   final String id;
   final String title;
   final String lastMessage;
-  final List<Message> messages;
+  List<Message> messages;
+
+  List<Message> get gettermessages => messages;
 }

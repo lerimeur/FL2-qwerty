@@ -29,15 +29,21 @@ class _LoginState extends State<Login> {
     });
   }
 
-  Future<void> handleLogin() async {
-    print('LOG IN $email $password');
-    final bool returnvalue = await context.read<API>().signup(email, password);
-    if (returnvalue) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (BuildContext context) => const MyBottomBar()),
-      );
-    }
+  void handleLogin() {
+    // print('LOG IN $email $password');
+    context.read<API>().signup(email, password).then(
+      (bool value) {
+        if (value) {
+          Navigator.of(context).push(
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext context) {
+                return const MyBottomBar();
+              },
+            ),
+          );
+        }
+      },
+    );
   }
 
   void goToRegister() {
