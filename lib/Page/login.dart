@@ -14,7 +14,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String email = 'greg@gmail.com';
+  String email = 'greg2@gmail.com';
   String password = 'test1234';
 
   void setMail(String value) {
@@ -31,19 +31,17 @@ class _LoginState extends State<Login> {
 
   void handleLogin() {
     // print('LOG IN $email $password');
-    context.read<API>().signup(email, password).then(
-      (bool value) {
-        if (value) {
-          Navigator.of(context).push(
-            MaterialPageRoute<dynamic>(
-              builder: (BuildContext context) {
-                return const MyBottomBar();
-              },
-            ),
-          );
-        }
-      },
-    );
+    context.read<API>().signup(email, password).then((bool value) {
+      if (value) {
+        Navigator.of(context).push(
+          MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) {
+              return const MyBottomBar();
+            },
+          ),
+        );
+      }
+    });
   }
 
   void goToRegister() {

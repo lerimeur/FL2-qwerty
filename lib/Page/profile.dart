@@ -1,6 +1,9 @@
 import 'package:fl2_qwerty_messenger/Page/rename.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../utils.dart';
 
 class Profil extends StatefulWidget {
   const Profil({super.key});
@@ -10,9 +13,7 @@ class Profil extends StatefulWidget {
 }
 
 class _ProfilState extends State<Profil> {
-  final TextStyle optionStyle =
-      const TextStyle(fontSize: 17, color: Colors.black);
-  bool darkMode = false;
+  late bool darkMode = context.read<API>().darkmode;
 
   void goToRename() {
     Navigator.push(
@@ -39,9 +40,21 @@ class _ProfilState extends State<Profil> {
           const SizedBox(
             height: kDefaultPadding * 0.25,
           ),
-          const Text(
-            "Jean Marie",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Spacer(flex: 2),
+              Text(
+                context.read<API>().user.firstname,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              ),
+              const Spacer(),
+              Text(
+                context.read<API>().user.lastname,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              ),
+              const Spacer(flex: 2),
+            ],
           ),
           const SizedBox(
             height: kDefaultPadding * 0.75,
@@ -53,15 +66,16 @@ class _ProfilState extends State<Profil> {
               padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Thème sombre',
-                    style: optionStyle,
+                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 17),
                   ),
                   const Spacer(),
                   Switch(
                     activeColor: kPrimaryColor,
                     value: darkMode,
                     onChanged: (bool value) {
+                      context.read<API>().changedarkmode();
                       setState(() {
                         darkMode = value;
                       });
@@ -81,18 +95,17 @@ class _ProfilState extends State<Profil> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(30, 0, 10, 0),
                 child: Row(
-                  children: <Widget>[
+                  children: const <Widget>[
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Nom et prénom',
-                        style: optionStyle,
+                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 17),
                       ),
                     ),
-                    const Spacer(),
-                    const Icon(
+                    Spacer(),
+                    Icon(
                       Icons.arrow_forward_ios,
-                      color: Colors.black26,
                     )
                   ],
                 ),

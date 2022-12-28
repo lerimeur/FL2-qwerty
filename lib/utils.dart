@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class API with ChangeNotifier {
   late User user;
+  bool darkmode = false;
   late List<Conversation> convlist = <Conversation>[];
   static const String endpoint = 'https://flutr.fundy.cf';
 
@@ -18,6 +19,11 @@ class API with ChangeNotifier {
       final int index = rawCookie.indexOf(';');
       headers['cookie'] = (index == -1) ? rawCookie : rawCookie.substring(0, index);
     }
+  }
+
+  void changedarkmode() {
+    darkmode = !darkmode;
+    notifyListeners();
   }
 
   Future<bool> signin(
@@ -41,13 +47,13 @@ class API with ChangeNotifier {
       );
       updateCookie(data);
 
-      final User tmp = json.decode(data.body);
+      final dynamic tmp = json.decode(data.body);
 
       user = User(
-        id: tmp.id,
-        firstname: tmp.firstname,
-        lastname: tmp.lastname,
-        profilePicture: tmp.profilePicture,
+        id: tmp['id'],
+        firstname: tmp['firstname'],
+        lastname: tmp['lastname'],
+        profilePicture: tmp['profilePicture'],
         token: '',
       );
 
@@ -62,6 +68,7 @@ class API with ChangeNotifier {
       'email': email,
       'password': password,
     });
+
     try {
       final http.Response data = await http.post(
         Uri.parse("$endpoint/auth/signin"),
@@ -70,14 +77,13 @@ class API with ChangeNotifier {
       );
 
       updateCookie(data);
-      final User tmp = json.decode(data.body);
-      inspect(data);
+      final dynamic tmp = json.decode(data.body);
 
       user = User(
-        id: tmp.id,
-        firstname: tmp.firstname,
-        lastname: tmp.lastname,
-        profilePicture: tmp.profilePicture,
+        id: tmp['id'],
+        firstname: tmp['firstname'],
+        lastname: tmp['lastname'],
+        profilePicture: tmp['profilePicture'],
         token: '',
       );
 
@@ -109,7 +115,7 @@ class API with ChangeNotifier {
 
       updateCookie(data);
       // print('GET ALL CONVERSATION');
-      final tmp = json.decode(data.body);
+      final dynamic tmp = json.decode(data.body);
 
       final List<Conversation> tmpconv = <Conversation>[];
 
@@ -160,11 +166,11 @@ class API with ChangeNotifier {
 
     updateCookie(data);
 
-    final List<Message> tmp = json.decode(data.body)['messages'];
+    final dynamic tmp = json.decode(data.body);
 
     final List<Message> tmplist = <Message>[];
 
-    for (final Message item in tmp) {
+    for (final Message item in tmp['messages']) {
       tmplist.add(
         Message(content: item.content, createdAt: DateTime.parse(item.createdAt as String), userId: item.userId),
       );
