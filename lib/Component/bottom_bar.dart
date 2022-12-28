@@ -1,6 +1,8 @@
 import 'package:fl2_qwerty_messenger/Page/home.dart';
 import 'package:fl2_qwerty_messenger/Page/profile.dart';
+import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyBottomBar extends StatefulWidget {
   const MyBottomBar({super.key});
@@ -34,7 +36,7 @@ class MyBottomBarState extends State<MyBottomBar> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        title: const Text('context.watch<API>().token'),
+        title: Text(context.watch<API>().user.firstname),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
