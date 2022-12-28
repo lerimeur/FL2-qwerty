@@ -9,8 +9,6 @@ const Color kErrorColor = Color(0xFFF03738);
 
 const double kDefaultPadding = 20.0;
 
-User? global_User;
-
 class User {
   User({
     required this.id,
@@ -30,15 +28,15 @@ class User {
 }
 
 class Message {
-  Message(this.mess, this.createdDate, this.sender);
-  final String mess;
-  final DateTime createdDate;
-  final String sender;
+  Message({required this.content, required this.createdAt, required this.userId});
+  final String content;
+  final DateTime createdAt;
+  final String userId;
 
-  @override
-  bool operator ==(Object other) {
-    return (other is Message) && other.mess == mess && other.createdDate == createdDate && other.sender == sender;
-  }
+  // @override
+  // bool operator ==(Object other) {
+  //   return (other is Message) && other.content == content && other.createdAt == createdAt && other.userId == userId;
+  // }
 }
 
 class Conversation {

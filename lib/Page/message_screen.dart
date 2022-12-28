@@ -1,18 +1,16 @@
 import 'dart:async';
-import 'dart:developer';
 
 // import 'package:chat/Api/Apirequest.dart';
 // import 'package:chat/Screens/Message/textInputchat.dart';
 // import 'package:chat/Screens/Message/text_message.dart';
 // import 'package:chat/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../Component/chat_input.dart';
 import '../Component/text_message.dart';
 import '../type.dart';
-
 import '../utils.dart';
-import 'package:provider/provider.dart';
 
 class MessagesScreen extends StatefulWidget {
   const MessagesScreen({Key? key, required this.conv}) : super(key: key);
@@ -25,7 +23,7 @@ class MessagesScreen extends StatefulWidget {
 class _MessagesScreenState extends State<MessagesScreen> {
   Timer? timer;
 
-  List<Message> message_list = [];
+  List<Message> messageList = <Message>[];
 
   // final context_tab = context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id);
 
@@ -38,76 +36,76 @@ class _MessagesScreenState extends State<MessagesScreen> {
   @override
   void initState() {
     super.initState();
-    final test = context.read<API>().getOneConversation(widget.conv.id);
+    // final Future<bool> test = context.read<API>().getOneConversation(widget.conv.id);
 
     // context.read<API>().
     timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
   }
 
-  refresh() async {
-    print('refresh');
-    context.read<API>().getOneConversation(widget.conv.id);
+  void refresh() async {
+    // print('refresh');
+    await context.read<API>().getOneConversation(widget.conv.id);
     // inspect(context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id));
     // final tmp_conv =
-    // message_list = tmp_conv;
+    // messageList = tmp_conv;
 
     // inspect(context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id));
     // setState(() {
-    //   message_list = widget.conv.messages;
+    //   messageList = widget.conv.messages;
     // });
     // getMessageforaConv(widget.conv.id).then(
     //   (value) => {
-    //     if (message_list.isEmpty || value.length > message_list.length) setState(() => {message_list = value})
+    //     if (messageList.isEmpty || value.length > messageList.length) setState(() => {messageList = value})
     //   },
     // );
   }
 
   @override
   Widget build(BuildContext context) {
-    message_list = context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id).first.messages;
+    messageList = context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id).first.messages;
     return Scaffold(
       appBar: buildAppBar(),
       body: Column(
-        children: [
+        children: <Widget>[
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
               child: listMessage(),
             ),
           ),
-          ChatInputField(widget.conv, fct: refresh),
+          ChatInputField(conv: widget.conv, fct: refresh),
         ],
       ),
     );
   }
 
   Widget listMessage() {
-    if (message_list.isEmpty) {
+    if (messageList.isEmpty) {
       return const Center(child: CircularProgressIndicator());
     }
 
     return ListView.builder(
-      itemCount: message_list.length,
+      itemCount: messageList.length,
       itemBuilder: (BuildContext context, int index) {
-        message_list.sort((a, b) {
-          return a.createdDate.compareTo(b.createdDate);
+        messageList.sort((Message a, Message b) {
+          return a.createdAt.compareTo(b.createdAt);
         });
 
-        final bool sender = message_list[index].sender == context.read<API>().user.id;
+        final bool sender = messageList[index].userId == context.read<API>().user.id;
 
         return Padding(
           padding: const EdgeInsets.only(top: kDefaultPadding),
           child: Row(
             mainAxisAlignment: sender ? MainAxisAlignment.end : MainAxisAlignment.start,
-            children: [
-              if (!sender) ...[
+            children: <Widget>[
+              if (!sender) ...<Widget>[
                 const CircleAvatar(
                   radius: 12,
                   backgroundImage: AssetImage("assets/images/user_2.png"),
                 ),
                 const SizedBox(width: kDefaultPadding / 2),
               ],
-              TextMessage(message: message_list[index].mess, sender: sender)
+              TextMessage(message: messageList[index].content, sender: sender)
             ],
           ),
         );
@@ -119,7 +117,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
     return AppBar(
       automaticallyImplyLeading: false,
       title: Row(
-        children: [
+        children: <Widget>[
           const BackButton(),
           const CircleAvatar(
             backgroundImage: AssetImage("assets/images/user_3.png"),
@@ -127,7 +125,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
           const SizedBox(width: kDefaultPadding * 0.75),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 widget.conv.title,
                 style: const TextStyle(fontSize: 16),

@@ -26,20 +26,27 @@ class _RegisterState extends State<Register> {
 
   Future<void> handleRegister() async {
     if (_formKey.currentState!.validate()) {
-      final bool returnvalue = await context.read<API>().signin(email, confirmPassword, firstname, lastname);
-      if (returnvalue) {
-        await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (BuildContext context) => const MyBottomBar()),
-        );
-      }
+      await context.read<API>().signin(email, confirmPassword, firstname, lastname).then((bool value) {
+        if (value) {
+          Navigator.of(context).push(
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext context) {
+                return const MyBottomBar();
+              },
+            ),
+          );
+        }
+      });
     }
   }
 
   void goToLogin() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => const Login()),
+    Navigator.of(context).push(
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) {
+          return const Login();
+        },
+      ),
     );
   }
 

@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   // final List<Message> messagelist = <Message>[
   //   Message('hello1', DateTime.now(), 'greg'),
@@ -70,19 +70,19 @@ class _HomeState extends State<Home> {
   // ];
 
   void handleSelectedChat(Conversation data) {
-    print('Select chat ${data.id}');
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => MessagesScreen(conv: data)),
+    // print('Select chat ${data.id}');
+    Navigator.of(context).push(
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) {
+          return MessagesScreen(conv: data);
+        },
+      ),
     );
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    // print(userid);
     context.read<API>().getAllConversations();
   }
 

@@ -1,8 +1,6 @@
 import 'package:fl2_qwerty_messenger/Page/home.dart';
 import 'package:fl2_qwerty_messenger/Page/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../utils.dart';
 
 class MyBottomBar extends StatefulWidget {
   const MyBottomBar({super.key});
