@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:fl2_qwerty_messenger/Page/register.dart';
 import 'package:fl2_qwerty_messenger/themes.dart';
 import 'package:fl2_qwerty_messenger/utils.dart';
@@ -22,7 +23,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: context.watch<API>().darkmode ? darkThemeData(context) : lightThemeData(context),
-      home: const Register(),
+      home: AnimatedSplashScreen(
+        splashIconSize: 200.0,
+        duration: 3000,
+        splash: 'assets/images/logo.png',
+        nextScreen: const Register(),
+        splashTransition: SplashTransition.fadeTransition,
+      ),
     );
   }
 }
