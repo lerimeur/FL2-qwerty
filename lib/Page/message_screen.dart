@@ -1,9 +1,5 @@
 import 'dart:async';
 
-// import 'package:chat/Api/Apirequest.dart';
-// import 'package:chat/Screens/Message/textInputchat.dart';
-// import 'package:chat/Screens/Message/text_message.dart';
-// import 'package:chat/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,8 +21,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   List<Message> messageList = <Message>[];
 
-  // final context_tab = context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id);
-
   @override
   void dispose() {
     super.dispose();
@@ -36,28 +30,12 @@ class _MessagesScreenState extends State<MessagesScreen> {
   @override
   void initState() {
     super.initState();
-    // final Future<bool> test = context.read<API>().getOneConversation(widget.conv.id);
-
-    // context.read<API>().
+    messageList = widget.conv.messages;
     timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
   }
 
-  void refresh() async {
-    // print('refresh');
-    await context.read<API>().getOneConversation(widget.conv.id);
-    // inspect(context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id));
-    // final tmp_conv =
-    // messageList = tmp_conv;
-
-    // inspect(context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id));
-    // setState(() {
-    //   messageList = widget.conv.messages;
-    // });
-    // getMessageforaConv(widget.conv.id).then(
-    //   (value) => {
-    //     if (messageList.isEmpty || value.length > messageList.length) setState(() => {messageList = value})
-    //   },
-    // );
+  void refresh() {
+    context.read<API>().getOneConversation(widget.conv.id);
   }
 
   @override
@@ -101,7 +79,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
               if (!sender) ...<Widget>[
                 const CircleAvatar(
                   radius: 12,
-                  backgroundImage: AssetImage("assets/images/user_2.png"),
+                  backgroundImage: AssetImage("assets/images/user_3.png"),
                 ),
                 const SizedBox(width: kDefaultPadding / 2),
               ],

@@ -223,11 +223,16 @@ class API with ChangeNotifier {
 
     final dynamic tmp = json.decode(data.body);
 
+    inspect(tmp);
     final List<Message> tmplist = <Message>[];
 
-    for (final Message item in tmp['messages']) {
+    for (final dynamic item in tmp['messages']) {
       tmplist.add(
-        Message(content: item.content, createdAt: DateTime.parse(item.createdAt as String), userId: item.userId),
+        Message(
+          content: item['content'],
+          createdAt: DateTime.parse(item['createdAt']),
+          userId: item['userId'],
+        ),
       );
     }
 
