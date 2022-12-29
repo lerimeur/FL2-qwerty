@@ -75,16 +75,15 @@ class _MessagesScreenState extends State<MessagesScreen> {
           padding: const EdgeInsets.only(top: kDefaultPadding),
           child: Row(
             mainAxisAlignment: sender ? MainAxisAlignment.end : MainAxisAlignment.start,
-            children: <Widget>[
-              if (!sender) ...<Widget>[
-                const CircleAvatar(
-                  radius: 12,
-                  backgroundImage: AssetImage("assets/images/user_3.png"),
-                ),
-                const SizedBox(width: kDefaultPadding / 2),
-              ],
-              TextMessage(message: messageList[index].content, sender: sender)
-            ],
+            children:
+                // if (!sender) ...<Widget>[
+                //   const CircleAvatar(
+                //     radius: 12,
+                //     backgroundImage: AssetImage("assets/images/user_3.png"),
+                //   ),
+                //   const SizedBox(width: kDefaultPadding / 2),
+                // ],
+                <Widget>[TextMessage(message: messageList[index].content, sender: sender)],
           ),
         );
       },

@@ -14,8 +14,7 @@ class TextMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: MediaQuery.of(context).platformBrightness == Brightness.dark ? Colors.black : Colors.white,
+    return SizedBox(
       width: MediaQuery.of(context).size.width * 0.65,
       child: Container(
         padding: const EdgeInsets.symmetric(

@@ -81,6 +81,9 @@ class _ChatInputFieldState extends State<ChatInputField> {
               textColor: Theme.of(context).textTheme.bodyText1?.color,
               onPressed: () async {
                 // print(messageValue.text.toString());
+                if (messageValue.text == '') {
+                  return;
+                }
 
                 context
                     .read<API>()
