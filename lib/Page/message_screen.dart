@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
-import 'package:provider/provider.dart';
+
 // import 'package:chat/Api/Apirequest.dart';
 // import 'package:chat/Screens/Message/textInputchat.dart';
 // import 'package:chat/Screens/Message/text_message.dart';
 // import 'package:chat/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../Component/chat_input.dart';
 import '../Component/text_message.dart';
@@ -23,72 +23,89 @@ class MessagesScreen extends StatefulWidget {
 class _MessagesScreenState extends State<MessagesScreen> {
   Timer? timer;
 
-  List<Message> message_list = [];
+  List<Message> messageList = <Message>[];
+
+  // final context_tab = context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id);
 
   @override
   void dispose() {
-    timer?.cancel();
     super.dispose();
+    timer?.cancel();
   }
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 2), (Timer t) => refresh());
+    // final Future<bool> test = context.read<API>().getOneConversation(widget.conv.id);
+
+    // context.read<API>().
+    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
   }
 
-  refresh() {
-    print('refresh');
-    setState(() {
-      message_list = widget.conv.messages;
-    });
+  void refresh() async {
+    // print('refresh');
+    await context.read<API>().getOneConversation(widget.conv.id);
+    // inspect(context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id));
+    // final tmp_conv =
+    // messageList = tmp_conv;
+
+    // inspect(context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id));
+    // setState(() {
+    //   messageList = widget.conv.messages;
+    // });
     // getMessageforaConv(widget.conv.id).then(
     //   (value) => {
-    //     if (message_list.isEmpty || value.length > message_list.length) setState(() => {message_list = value})
+    //     if (messageList.isEmpty || value.length > messageList.length) setState(() => {messageList = value})
     //   },
     // );
   }
 
   @override
   Widget build(BuildContext context) {
+    messageList = context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id).first.messages;
     return Scaffold(
       appBar: buildAppBar(),
       body: Column(
-        children: [
+        children: <Widget>[
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
               child: listMessage(),
             ),
           ),
-          ChatInputField(widget.conv, fct: refresh),
+          ChatInputField(conv: widget.conv, fct: refresh),
         ],
       ),
     );
   }
 
   Widget listMessage() {
-    if (message_list.isEmpty) return const Center(child: CircularProgressIndicator());
+    if (messageList.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return ListView.builder(
-      itemCount: message_list.length,
-      itemBuilder: (context, index) {
-        // message_list.sort((a, b) {
-        //   return a.createdDate.compareTo(b.createdDate);
-        // });
-        final _sender = message_list[index].sender == 'greg';
+      itemCount: messageList.length,
+      itemBuilder: (BuildContext context, int index) {
+        messageList.sort((Message a, Message b) {
+          return a.createdAt.compareTo(b.createdAt);
+        });
+
+        final bool sender = messageList[index].userId == context.read<API>().user.id;
+
         return Padding(
           padding: const EdgeInsets.only(top: kDefaultPadding),
           child: Row(
-            mainAxisAlignment: _sender ? MainAxisAlignment.end : MainAxisAlignment.start,
-            children: [
-              if (!_sender) ...[
+            mainAxisAlignment: sender ? MainAxisAlignment.end : MainAxisAlignment.start,
+            children: <Widget>[
+              if (!sender) ...<Widget>[
                 const CircleAvatar(
                   radius: 12,
                   backgroundImage: AssetImage("assets/images/user_2.png"),
                 ),
-                SizedBox(width: kDefaultPadding / 2),
+                const SizedBox(width: kDefaultPadding / 2),
               ],
-              TextMessage(message: message_list[index].mess, sender: _sender)
+              TextMessage(message: messageList[index].content, sender: sender)
             ],
           ),
         );
@@ -100,20 +117,20 @@ class _MessagesScreenState extends State<MessagesScreen> {
     return AppBar(
       automaticallyImplyLeading: false,
       title: Row(
-        children: [
-          BackButton(),
-          CircleAvatar(
+        children: <Widget>[
+          const BackButton(),
+          const CircleAvatar(
             backgroundImage: AssetImage("assets/images/user_3.png"),
           ),
-          SizedBox(width: kDefaultPadding * 0.75),
+          const SizedBox(width: kDefaultPadding * 0.75),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Text(
                 widget.conv.title,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
-              Text(
+              const Text(
                 "Active 3m ago",
                 style: TextStyle(fontSize: 12),
               )

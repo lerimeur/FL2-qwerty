@@ -16,10 +16,12 @@ class MyBottomBar extends StatefulWidget {
 class MyBottomBarState extends State<MyBottomBar> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[Home(), const Profil()];
+  static final List<Widget> _widgetOptions = <Widget>[const Home(), const Profil()];
 
+// clc6ha71g42470ipdnzfhpplj
   void _onItemTapped(int index) {
-    context.read<API>().getAllUsers();
+    // context.read<API>().getAllUsers();
+
     // if (index == 0) {
     //   context.read<API>().updateToken('Home');
     // } else {
@@ -42,15 +44,6 @@ class MyBottomBarState extends State<MyBottomBar> {
               'https://i.kym-cdn.com/entries/icons/original/000/028/312/will_poulter.PNG',
             ),
           ),
-        ),
-        title: Row(
-          children: const <Widget>[
-            Text(
-              'Chats',
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-            )
-          ],
         ),
         actions: <Widget>[
           CircleAvatar(
@@ -80,6 +73,7 @@ class MyBottomBarState extends State<MyBottomBar> {
           ),
           const SizedBox(width: 10),
         ],
+        title: Text(context.watch<API>().user.firstname),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -99,6 +93,13 @@ class MyBottomBarState extends State<MyBottomBar> {
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //   final userid = 'clbyz4ky700480ioekb8nrbsa';
+
+      //   context.read<API>().newConversation(userid);
+      // }
+
+      //     ),
     );
   }
 }
