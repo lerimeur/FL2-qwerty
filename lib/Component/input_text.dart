@@ -7,13 +7,14 @@ class InputText extends StatefulWidget {
     this.password = false,
     required this.onChanged,
     this.validator,
+    this.inputColor = const Color.fromARGB(15, 0, 0, 0),
   });
 
   final String hintText;
   final bool password;
   final ValueChanged onChanged;
   final String? Function(String?)? validator;
-
+  final Color inputColor;
 
   @override
   State<InputText> createState() => _InputTextState();
@@ -28,7 +29,7 @@ class _InputTextState extends State<InputText> {
       onChanged: widget.onChanged,
       decoration: InputDecoration(
         filled: true,
-        fillColor: const Color.fromARGB(15, 0, 0, 0),
+        fillColor: widget.inputColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14.0),
           borderSide: BorderSide.none,

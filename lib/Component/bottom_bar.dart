@@ -1,5 +1,7 @@
 import 'package:fl2_qwerty_messenger/Page/home.dart';
 import 'package:fl2_qwerty_messenger/Page/profile.dart';
+import 'package:fl2_qwerty_messenger/Page/search.dart';
+import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +37,33 @@ class MyBottomBarState extends State<MyBottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Container(),
+        leading: Container(
+          padding: const EdgeInsets.only(left: kDefaultPadding),
+          child: const CircleAvatar(
+            backgroundImage: NetworkImage(
+              'https://i.kym-cdn.com/entries/icons/original/000/028/312/will_poulter.PNG',
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.grey[300],
+            child: IconButton(
+              icon: const Icon(Icons.person_add_sharp),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<dynamic>(
+                    builder: (BuildContext context) {
+                      return const Search();
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(width: 10),
+        ],
         title: Text(context.watch<API>().user.firstname),
       ),
       body: Center(
