@@ -1,5 +1,7 @@
+import 'package:fl2_qwerty_messenger/Component/button.dart';
 import 'package:fl2_qwerty_messenger/Component/chat.dart';
 import 'package:fl2_qwerty_messenger/Page/message_screen.dart';
+import 'package:fl2_qwerty_messenger/Page/search.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
 
@@ -76,18 +78,41 @@ class _HomeState extends State<Home> {
     );
   }
 
+  void searchContacts() {
+    Navigator.push(
+      context,
+      MaterialPageRoute<Search>(builder: (BuildContext context) => Search()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: fakeData.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Chat(
-          title: fakeData[index].title,
-          lastMessage: fakeData[index].lastMessage,
-          id: fakeData[index].id,
-          onSelectedChat: () => handleSelectedChat(fakeData[index]),
-        );
-      },
+    return Column(
+      children: <Widget>[
+        Container(
+          color: kPrimaryColor,
+          // width: MediaQuery.of(context).size.width * 0.90 ,
+          padding: const EdgeInsets.all(kDefaultPadding),
+          child: Button(
+            onPressed: () => searchContacts(),
+            label: 'Rechercher',
+            color: Colors.black12,
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: fakeData.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Chat(
+                title: fakeData[index].title,
+                lastMessage: fakeData[index].lastMessage,
+                id: fakeData[index].id,
+                onSelectedChat: () => handleSelectedChat(fakeData[index]),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

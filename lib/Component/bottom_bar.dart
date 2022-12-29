@@ -1,9 +1,10 @@
+import 'package:fl2_qwerty_messenger/Component/button.dart';
 import 'package:fl2_qwerty_messenger/Page/home.dart';
 import 'package:fl2_qwerty_messenger/Page/profile.dart';
+import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class MyBottomBar extends StatefulWidget {
   const MyBottomBar({super.key});
@@ -34,13 +35,16 @@ class MyBottomBarState extends State<MyBottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Container(
+          padding: const EdgeInsets.only(left: kDefaultPadding),
+          child: const CircleAvatar(
+            backgroundImage: NetworkImage(
+              'https://i.kym-cdn.com/entries/icons/original/000/028/312/will_poulter.PNG',
+            ),
+          ),
+        ),
         title: Row(
           children: const <Widget>[
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://i.kym-cdn.com/entries/icons/original/000/028/312/will_poulter.PNG'),
-            ),
-            SizedBox(width: 20),
             Text(
               'Chats',
               style:
@@ -76,25 +80,6 @@ class MyBottomBarState extends State<MyBottomBar> {
           ),
           const SizedBox(width: 10),
         ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(48.0),
-          child: Theme(
-            data: Theme.of(context).copyWith(accentColor: Colors.white),
-            child: Container(
-              height: 45.0,
-              alignment: Alignment.center,
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey[300],
-                  prefixIcon: const Icon(Icons.search),
-                  hintText: 'Enter a search term',
-                ),
-              ),
-            ),
-          ),
-        ),
-        leading: Container(),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
