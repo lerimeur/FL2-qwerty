@@ -14,15 +14,14 @@ class User {
     required this.id,
     required this.firstname,
     required this.lastname,
-    required this.token,
     required this.profilePicture,
+    required this.darkMode,
   });
   final String id;
   final String firstname;
   final String lastname;
-  final String token;
   final String profilePicture;
-
+  final bool darkMode;
   String getFirstname() => firstname;
   String getLastname() => lastname;
 }
@@ -45,12 +44,14 @@ class Conversation {
     required this.lastMessage,
     required this.id,
     required this.messages,
+    required this.userlist,
   });
 
   final String id;
   final String title;
   final String lastMessage;
   List<Message> messages;
+  List<User> userlist;
 
   List<Message> get gettermessages => messages;
 }

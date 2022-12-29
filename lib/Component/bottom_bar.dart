@@ -1,6 +1,6 @@
-import 'package:fl2_qwerty_messenger/Component/button.dart';
 import 'package:fl2_qwerty_messenger/Page/home.dart';
 import 'package:fl2_qwerty_messenger/Page/profile.dart';
+import 'package:fl2_qwerty_messenger/Page/search.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
@@ -50,24 +50,15 @@ class MyBottomBarState extends State<MyBottomBar> {
             radius: 20,
             backgroundColor: Colors.grey[300],
             child: IconButton(
-              icon: const Icon(Icons.camera_alt_rounded, color: Colors.black),
-              tooltip: 'Show Snackbar',
+              icon: const Icon(Icons.person_add_sharp),
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
-              },
-            ),
-          ),
-          const SizedBox(width: 10),
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.grey[300],
-            child: IconButton(
-              icon: const Icon(Icons.person_add_sharp, color: Colors.black),
-              tooltip: 'Show Snackbar',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('This is a snackbar')));
+                Navigator.of(context).push(
+                  MaterialPageRoute<dynamic>(
+                    builder: (BuildContext context) {
+                      return const Search();
+                    },
+                  ),
+                );
               },
             ),
           ),

@@ -1,4 +1,3 @@
-import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
 
 class InputText extends StatefulWidget {

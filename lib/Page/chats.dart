@@ -1,23 +1,23 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-class Chats extends StatefulWidget {
-  const Chats({super.key});
+// class Chats extends StatefulWidget {
+//   const Chats({super.key});
 
-  @override
-  State<Chats> createState() => _ChatsState();
-}
+//   @override
+//   State<Chats> createState() => _ChatsState();
+// }
 
-class _ChatsState extends State<Chats> {
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+// class _ChatsState extends State<Chats> {
+//   static const TextStyle optionStyle =
+//       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'chats',
-        style: optionStyle,
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(
+//       child: Text(
+//         'chats',
+//         style: optionStyle,
+//       ),
+//     );
+//   }
+// }

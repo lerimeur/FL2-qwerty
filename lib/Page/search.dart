@@ -15,16 +15,20 @@ class _SearchState extends State<Search> {
   List<User> userList = <User>[];
 
   void fetchAllUsers() async {
-    final users = await context.read<API>().getAllUsers();
-    print('USERS ${users}');
+    final List<User> users = await context.read<API>().getAllUsers();
     setState(() {
       userList = users;
     });
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     fetchAllUsers();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
       body: SafeArea(
@@ -34,19 +38,26 @@ class _SearchState extends State<Search> {
               child: ListView.builder(
                 itemCount: userList.length,
                 itemBuilder: (BuildContext context, int index) {
+                  if (userList[index].id == context.read<API>().user.id) {
+                    return Container();
+                  }
                   return SizedBox(
                     height: 50,
                     child: InkWell(
                       onTap: () {
-                        //Navitor crate CONV
+                        context.read<API>().newConversation(<String>[userList[index].id]).then((dynamic data) {
+                          if (data != null) {
+                            Navigator.of(context).pop();
+                            context.read<API>().getAllConversations();
+                          }
+                        });
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            left: kDefaultPadding, right: kDefaultPadding),
+                        padding: const EdgeInsets.only(left: kDefaultPadding, right: kDefaultPadding),
                         child: Row(
                           children: <Widget>[
-                            CircleAvatar(),
-                            SizedBox(width: 20),
+                            const CircleAvatar(),
+                            const SizedBox(width: 20),
                             Text(
                               '${userList[index].firstname} ${userList[index].lastname}',
                             ),

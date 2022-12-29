@@ -45,16 +45,15 @@ class API with ChangeNotifier {
         headers: headers,
         body: body,
       );
+
       updateCookie(data);
-
       final dynamic tmp = json.decode(data.body);
-
       user = User(
         id: tmp['id'],
         firstname: tmp['firstname'],
         lastname: tmp['lastname'],
         profilePicture: tmp['profilePicture'],
-        token: '',
+        darkMode: tmp['darkMode'],
       );
 
       return true;
@@ -84,7 +83,7 @@ class API with ChangeNotifier {
         firstname: tmp['firstname'],
         lastname: tmp['lastname'],
         profilePicture: tmp['profilePicture'],
-        token: '',
+        darkMode: tmp['darkMode'],
       );
 
       return true;
@@ -109,14 +108,13 @@ class API with ChangeNotifier {
             firstname: tmp[i]['firstname'],
             lastname: tmp[i]['lastname'],
             profilePicture: tmp[i]['profilePicture'],
-            token: '',
+            darkMode: tmp[i]['darkMode'],
           ),
         );
       }
 
       return tmpusers;
     } catch (e) {
-
       return <User>[];
     }
   }
@@ -129,17 +127,55 @@ class API with ChangeNotifier {
       // print('GET ALL CONVERSATION');
       final dynamic tmp = json.decode(data.body);
 
+      // inspect(tmp);
       final List<Conversation> tmpconv = <Conversation>[];
 
       for (int i = 0; i < tmp['conversations'].length; i++) {
+        final List<User> tmpusers = <User>[];
+        final List<Message> tmpmessage = <Message>[];
+        String tmptitre = 'titre';
+
+        for (int j = 0; j < tmp['conversations'][i]['Users'].length; j++) {
+          if (tmp['conversations'][i]['Users'][j]['id'] != user.id) {
+            tmptitre = tmp['conversations'][i]['Users'][j]['firstname'];
+          }
+
+          tmpusers.add(
+            User(
+              id: tmp['conversations'][i]['Users'][j]['id'],
+              firstname: tmp['conversations'][i]['Users'][j]['firstname'],
+              lastname: tmp['conversations'][i]['Users'][j]['lastname'],
+              profilePicture: tmp['conversations'][i]['Users'][j]['profilePicture'],
+              darkMode: tmp['conversations'][i]['Users'][j]['darkMode'],
+            ),
+          );
+        }
+
+        for (int j = 0; j < tmp['conversations'][i]['messages'].length; j++) {
+          tmpmessage.add(
+            Message(
+              content: tmp['conversations'][i]['messages'][j]['content'],
+              createdAt: DateTime.parse(tmp['conversations'][i]['messages'][j]['createdAt']),
+              userId: tmp['conversations'][i]['messages'][j]['id'],
+            ),
+          );
+        }
+
+        String tmplast = '';
+        if (tmpmessage.isNotEmpty) {
+          tmplast = tmpmessage.last.content;
+        }
         tmpconv.add(
           Conversation(
             id: tmp['conversations'][i]['id'],
-            title: "titre",
-            lastMessage: 'last',
-            messages: <Message>[],
+            title: tmptitre,
+            lastMessage: tmplast,
+            messages: tmpmessage,
+            userlist: tmpusers,
           ),
         );
+        tmpmessage.clear();
+        tmpusers.clear();
       }
 
       // inspect(tmpconv);
@@ -150,21 +186,28 @@ class API with ChangeNotifier {
     }
   }
 
-  void newConversation(
+  dynamic newConversation(
     List<String> userId,
   ) async {
-    final String body = jsonEncode(<String, List<String>>{'Users': userId});
+    try {
+      final String body = jsonEncode(<String, List<String>>{'Users': userId});
 
-    final http.Response data = await http.post(
-      Uri.parse("$endpoint/conversations"),
-      headers: headers,
-      body: body,
-    );
+      final http.Response data = await http.post(
+        Uri.parse("$endpoint/conversations"),
+        headers: headers,
+        body: body,
+      );
+      // print("CREATE CONV");
 
-    updateCookie(data);
-    // print("CREATE CONV");
+      updateCookie(data);
+      final dynamic tmp = json.decode(data.body);
+      inspect(tmp);
+      return tmp;
+    } catch (e) {
+      return null;
+    }
+
     // print(data.body);
-    // final tmp = json.decode(data.body);
     //   inspect(tmp);
     //   for (final elem in tmp) {
     //     inspect(elem);
