@@ -1,6 +1,8 @@
 import 'package:fl2_qwerty_messenger/Component/input_text.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../utils.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -10,38 +12,19 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  final List<User> fakeData = <User>[
-    User(
-      id: '0',
-      firstname: 'Paul',
-      lastname: 'Dupont',
-      token: '',
-      profilePicture: 'profilePicture',
-    ),
-    User(
-      id: '1',
-      firstname: 'Louis',
-      lastname: 'Martin',
-      token: '',
-      profilePicture: 'profilePicture',
-    ),
-    User(
-      id: '2',
-      firstname: 'Thierry',
-      lastname: 'Racine',
-      token: '',
-      profilePicture: 'profilePicture',
-    ),
-    User(
-      id: '3',
-      firstname: 'Pierre',
-      lastname: 'Durant',
-      token: '',
-      profilePicture: 'profilePicture',
-    )
-  ];
+  List<User> userList = <User>[];
+
+  void fetchAllUsers() async {
+    final users = await context.read<API>().getAllUsers();
+    print('USERS ${users}');
+    setState(() {
+      userList = users;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    fetchAllUsers();
     return Scaffold(
       appBar: buildAppBar(context),
       body: SafeArea(
@@ -49,20 +32,23 @@ class _SearchState extends State<Search> {
           children: <Widget>[
             Expanded(
               child: ListView.builder(
-                itemCount: fakeData.length,
+                itemCount: userList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return SizedBox(
                     height: 50,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        //Navitor crate CONV
+                      },
                       child: Padding(
-                        padding: EdgeInsets.only(left: kDefaultPadding, right: kDefaultPadding),
+                        padding: EdgeInsets.only(
+                            left: kDefaultPadding, right: kDefaultPadding),
                         child: Row(
                           children: <Widget>[
                             CircleAvatar(),
                             SizedBox(width: 20),
                             Text(
-                              '${fakeData[index].firstname} ${fakeData[index].lastname}',
+                              '${userList[index].firstname} ${userList[index].lastname}',
                             ),
                           ],
                         ),
@@ -90,7 +76,7 @@ AppBar buildAppBar(BuildContext context) {
           child: InputText(
             onChanged: (dynamic value) {},
             hintText: 'Rechercher',
-            inputColor: kPrimaryColor,
+            inputColor: const Color.fromARGB(0, 0, 0, 0),
           ),
         )
       ],

@@ -93,19 +93,31 @@ class API with ChangeNotifier {
     }
   }
 
-  Future<bool> getAllUsers() async {
+  Future<List<User>> getAllUsers() async {
     try {
       final http.Response data = await http.get(
         Uri.parse("$endpoint/users"),
         headers: headers,
       );
-      updateCookie(data);
+      final dynamic tmp = json.decode(data.body);
+      final List<User> tmpusers = <User>[];
 
-      // final User tmp = json.decode(data.body);
+      for (int i = 0; i < tmp.length; i++) {
+        tmpusers.add(
+          User(
+            id: tmp[i]['id'],
+            firstname: tmp[i]['firstname'],
+            lastname: tmp[i]['lastname'],
+            profilePicture: tmp[i]['profilePicture'],
+            token: '',
+          ),
+        );
+      }
 
-      return true;
+      return tmpusers;
     } catch (e) {
-      return false;
+
+      return <User>[];
     }
   }
 
