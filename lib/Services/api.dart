@@ -50,15 +50,10 @@ Future<http.Response> signin(
 Future<http.Response> signout(
   Map<String, String> headers,
 ) async {
-  final http.Response response = await http.delete(Uri.parse("$endpoint/auth/signout"), headers: headers);
+  final http.Response response =
+      await http.delete(Uri.parse("$endpoint/auth/signout"), headers: headers);
   return response;
 }
-
-// Future<http.Response> forgotPassword() {
-// Uri.parse("$endpoint/"),
-// headers: headers,
-// );
-// }
 
 Future<http.Response> getUser(
   String firstname,
@@ -75,14 +70,16 @@ Future<http.Response> getUser(
 Future<http.Response> getMe(
   Map<String, String> headers,
 ) async {
-  final http.Response response = await http.get(Uri.parse("$endpoint/users/me"), headers: headers);
+  final http.Response response =
+      await http.get(Uri.parse("$endpoint/users/me"), headers: headers);
   return response;
 }
 
 Future<http.Response> getAllUsers(
   Map<String, String> headers,
 ) async {
-  final http.Response response = await http.get(Uri.parse("$endpoint/users/"), headers: headers);
+  final http.Response response =
+      await http.get(Uri.parse("$endpoint/users/"), headers: headers);
   return response;
 }
 
@@ -114,7 +111,8 @@ Future<http.Response> newConversation(
 Future<http.Response> getAllConversations(
   Map<String, String> headers,
 ) async {
-  final http.Response response = await http.get(Uri.parse("$endpoint/conversations"), headers: headers);
+  final http.Response response =
+      await http.get(Uri.parse("$endpoint/conversations"), headers: headers);
   return response;
 }
 
@@ -122,7 +120,8 @@ Future<http.Response> getOneConversation(
   String id,
   Map<String, String> headers,
 ) async {
-  final http.Response response = await http.get(Uri.parse("$endpoint/conversations/$id"), headers: headers);
+  final http.Response response = await http
+      .get(Uri.parse("$endpoint/conversations/$id"), headers: headers);
   return response;
 }
 
@@ -151,7 +150,10 @@ Future<http.Response> newMessage(
   Map<String, String> headers,
 ) async {
   final String body = jsonEncode(<String, Map<String, String>>{
-    'data': <String, String>{'content': content, 'conversationId': conversationId}
+    'data': <String, String>{
+      'content': content,
+      'conversationId': conversationId
+    }
   });
   final http.Response response = await http.post(
     Uri.parse("$endpoint/messages"),
@@ -166,6 +168,7 @@ Future<http.Response> deleteMessage(
   String id,
   Map<String, String> headers,
 ) async {
-  final http.Response response = await http.delete(Uri.parse("$endpoint/messages/$id"), headers: headers);
+  final http.Response response =
+      await http.delete(Uri.parse("$endpoint/messages/$id"), headers: headers);
   return response;
 }
