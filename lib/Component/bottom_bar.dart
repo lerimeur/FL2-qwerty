@@ -38,7 +38,7 @@ class MyBottomBarState extends State<MyBottomBar> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(
-          padding: const EdgeInsets.only(left: kDefaultPadding),
+          padding: const EdgeInsets.only(left: defaultPadding),
           child: const CircleAvatar(
             backgroundImage: NetworkImage(
               'https://i.kym-cdn.com/entries/icons/original/000/028/312/will_poulter.PNG',
@@ -50,6 +50,7 @@ class MyBottomBarState extends State<MyBottomBar> {
             radius: 20,
             backgroundColor: Colors.grey[300],
             child: IconButton(
+              color: secondaryColor,
               icon: const Icon(Icons.person_add_sharp),
               onPressed: () {
                 Navigator.of(context).push(
@@ -81,7 +82,6 @@ class MyBottomBarState extends State<MyBottomBar> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
       // floatingActionButton: FloatingActionButton(onPressed: () {

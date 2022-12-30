@@ -5,21 +5,23 @@ import 'type.dart';
 
 ThemeData lightThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
-    primaryColor: kPrimaryColor,
+    primaryColor: primaryColor,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: appBarTheme,
-    iconTheme: const IconThemeData(color: kContentColorLightTheme),
-    textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme).apply(bodyColor: kContentColorLightTheme),
+    iconTheme: const IconThemeData(color: contentColorLightTheme),
+    textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme).apply(
+      bodyColor: contentColorLightTheme,
+    ),
     colorScheme: const ColorScheme.light(
-      primary: kPrimaryColor,
-      secondary: kSecondaryColor,
-      error: kErrorColor,
+      primary: primaryColor,
+      secondary: secondaryColor,
+      error: errorColor,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.white,
-      selectedItemColor: kContentColorLightTheme.withOpacity(0.7),
-      unselectedItemColor: kContentColorLightTheme.withOpacity(0.32),
-      selectedIconTheme: const IconThemeData(color: kPrimaryColor),
+      selectedItemColor: secondaryColor,
+      unselectedItemColor: contentColorLightTheme.withOpacity(0.32),
+      selectedIconTheme: const IconThemeData(color: secondaryColor),
       showUnselectedLabels: true,
     ),
   );
@@ -27,21 +29,23 @@ ThemeData lightThemeData(BuildContext context) {
 
 ThemeData darkThemeData(BuildContext context) {
   return ThemeData.dark().copyWith(
-    primaryColor: kPrimaryColor,
-    scaffoldBackgroundColor: kContentColorLightTheme,
+    primaryColor: primaryColor,
+    scaffoldBackgroundColor: contentColorLightTheme,
     appBarTheme: appBarTheme,
-    iconTheme: const IconThemeData(color: kContentColorDarkTheme),
-    textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme).apply(bodyColor: kContentColorDarkTheme),
+    iconTheme: const IconThemeData(color: contentColorDarkTheme),
+    textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme).apply(
+      bodyColor: contentColorDarkTheme,
+    ),
     colorScheme: const ColorScheme.dark().copyWith(
-      primary: kPrimaryColor,
-      secondary: kSecondaryColor,
-      error: kErrorColor,
+      primary: primaryColor,
+      secondary: secondaryColor,
+      error: errorColor,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: kContentColorLightTheme,
+      backgroundColor: contentColorLightTheme,
       selectedItemColor: Colors.white70,
-      unselectedItemColor: kContentColorDarkTheme.withOpacity(0.32),
-      selectedIconTheme: const IconThemeData(color: kPrimaryColor),
+      unselectedItemColor: contentColorDarkTheme.withOpacity(0.32),
+      selectedIconTheme: const IconThemeData(color: primaryColor),
       showUnselectedLabels: true,
     ),
   );

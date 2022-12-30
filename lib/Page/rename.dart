@@ -21,7 +21,7 @@ class _RenameState extends State<Rename> {
     return Scaffold(
       appBar: buildAppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(kDefaultPadding),
+        padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: <Widget>[
             InputText(
@@ -29,19 +29,19 @@ class _RenameState extends State<Rename> {
               hintText: 'Prénom',
             ),
             const SizedBox(
-              height: kDefaultPadding * 0.75,
+              height: defaultPadding * 0.75,
             ),
             InputText(
               onChanged: handleLastName,
               hintText: 'Nom',
             ),
             const SizedBox(
-              height: kDefaultPadding * 1.5,
+              height: defaultPadding * 1.5,
             ),
             Button(
               onPressed: handleSubmit,
               label: 'Enregistrer',
-              color: kPrimaryColor,
+              color: primaryColor,
             )
           ],
         ),
@@ -55,7 +55,7 @@ class _RenameState extends State<Rename> {
       title: Row(
         children: const <Widget>[
           BackButton(),
-          SizedBox(width: kDefaultPadding * 0.75),
+          SizedBox(width: defaultPadding * 0.75),
           Text(
             'Nom et prénom',
             style: TextStyle(fontSize: 18),
