@@ -16,7 +16,10 @@ class MyBottomBar extends StatefulWidget {
 class MyBottomBarState extends State<MyBottomBar> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[const Home(), const Profil()];
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Home(),
+    const Profil()
+  ];
 
 // clc6ha71g42470ipdnzfhpplj
   void _onItemTapped(int index) {
