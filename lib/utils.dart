@@ -56,6 +56,7 @@ class API with ChangeNotifier {
         lastname: tmp['lastname'],
         profilePicture: tmp['profilePicture'],
         darkMode: tmp['darkMode'],
+        type: tmp['type'],
       );
 
       return true;
@@ -86,6 +87,7 @@ class API with ChangeNotifier {
         lastname: tmp['lastname'],
         profilePicture: tmp['profilePicture'],
         darkMode: tmp['darkMode'],
+        type: tmp['type'],
       );
 
       return true;
@@ -96,8 +98,6 @@ class API with ChangeNotifier {
 
   Future<List<User>> getAllUsers() async {
     try {
-      print('test');
-      print(headers);
       final http.Response data = await http.get(
         Uri.parse("$endpoint/users"),
         headers: headers,
@@ -113,9 +113,11 @@ class API with ChangeNotifier {
             lastname: tmp[i]['lastname'],
             profilePicture: tmp[i]['profilePicture'],
             darkMode: tmp[i]['darkMode'],
+            type: tmp[i]['type'],
           ),
         );
       }
+      print(tmpusers);
 
       return tmpusers;
     } catch (e) {
@@ -153,6 +155,7 @@ class API with ChangeNotifier {
               profilePicture: tmp['conversations'][i]['Users'][j]
                   ['profilePicture'],
               darkMode: tmp['conversations'][i]['Users'][j]['darkMode'],
+              type: tmp['conversations'][i]['Users'][j]['type'],
             ),
           );
         }

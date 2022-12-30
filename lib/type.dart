@@ -10,24 +10,26 @@ const Color kErrorColor = Color(0xFFF03738);
 const double kDefaultPadding = 20.0;
 
 class User {
-  User({
-    required this.id,
-    required this.firstname,
-    required this.lastname,
-    required this.profilePicture,
-    required this.darkMode,
-  });
+  User(
+      {required this.id,
+      required this.firstname,
+      required this.lastname,
+      required this.profilePicture,
+      required this.darkMode,
+      required this.type});
   final String id;
   final String firstname;
   final String lastname;
   final String profilePicture;
   final bool darkMode;
+  final String type;
   String getFirstname() => firstname;
   String getLastname() => lastname;
 }
 
 class Message {
-  Message({required this.content, required this.createdAt, required this.userId});
+  Message(
+      {required this.content, required this.createdAt, required this.userId});
   final String content;
   final DateTime createdAt;
   final String userId;

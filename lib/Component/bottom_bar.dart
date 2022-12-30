@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fl2_qwerty_messenger/Page/home.dart';
 import 'package:fl2_qwerty_messenger/Page/profile.dart';
 import 'package:fl2_qwerty_messenger/Page/search.dart';
@@ -23,7 +25,8 @@ class MyBottomBarState extends State<MyBottomBar> {
 
 // clc6ha71g42470ipdnzfhpplj
   void _onItemTapped(int index) {
-    // context.read<API>().getAllUsers();
+    print(context.read<API>().user.type);
+    inspect(context.read<API>().user);
 
     // if (index == 0) {
     //   context.read<API>().updateToken('Home');
