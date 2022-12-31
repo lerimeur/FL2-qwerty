@@ -1,11 +1,13 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:fl2_qwerty_messenger/Page/rename.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../utils.dart';
 
@@ -19,7 +21,7 @@ class Profil extends StatefulWidget {
 class _ProfilState extends State<Profil> {
   late bool darkMode = context.read<API>().darkmode;
   final ImagePicker _picker = ImagePicker();
-  var _image;
+  String _image = '';
 
   void goToRename() {
     Navigator.push(
@@ -30,41 +32,75 @@ class _ProfilState extends State<Profil> {
     );
   }
 
+  void pushPic(String base64string) {
+    context.read<API>().postProfilPic(base64string);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print('LA2');
+    _image = context.read<API>().user.profilePicture;
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(_image);
     return ListView(
       children: <Widget>[
         const SizedBox(
           height: defaultPadding * 0.5,
         ),
         Center(
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(50),
+          child: GestureDetector(
+            onTap: () async {
+              final XFile? image = await _picker.pickImage(
+                source: ImageSource.camera,
+                imageQuality: 20,
+                preferredCameraDevice: CameraDevice.front,
+              );
+              if (image == null) {
+                return;
+              }
+              final File imagefile = File(image.path);
+              final Uint8List imagebytes = await imagefile.readAsBytes();
+              final String base64string = base64.encode(imagebytes);
+              pushPic(base64string);
+              setState(() {
+                _image = base64string;
+              });
+            },
+            child: Container(
+              child: _image != ''
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      width: 100,
+                      height: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.memory(
+                          const Base64Decoder().convert(_image),
+                          width: 100.0,
+                          height: 100.0,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      width: 100,
+                      height: 100,
+                      child: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                      ),
+                    ),
             ),
-            child: _image != null
-                ? Image.file(
-                    _image,
-                    width: 100.0,
-                    height: 100.0,
-                    fit: BoxFit.fitHeight,
-                  )
-                : Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    width: 100,
-                    height: 100,
-                    child: const Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                    ),
-                  ),
           ),
         ),
         const SizedBox(

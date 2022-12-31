@@ -11,15 +11,16 @@ class API with ChangeNotifier {
   late List<Conversation> convlist = <Conversation>[];
   static const String endpoint = 'https://flutr.fundy.cf';
 
-  late Map<String, String> headers = <String, String>{
-    "Content-Type": "application/json"
-  };
+  late Map<String, String> headers = <String, String>{"Content-Type": "application/json"};
+
+  late Map<String, String> headersPic = <String, String>{"Content-Type": "application/x-www-form-urlencoded"};
 
   void updateCookie(http.Response response) {
     final String? rawCookie = response.headers['set-cookie'];
     if (rawCookie != null) {
       final List<String> cookie = rawCookie.split(';');
       headers['cookie'] = cookie[0];
+      headersPic['cookie'] = cookie[0];
     }
   }
 
@@ -127,8 +128,7 @@ class API with ChangeNotifier {
 
   void getAllConversations() async {
     try {
-      final http.Response data = await http
-          .get(Uri.parse("$endpoint/conversations"), headers: headers);
+      final http.Response data = await http.get(Uri.parse("$endpoint/conversations"), headers: headers);
 
       updateCookie(data);
       // print('GET ALL CONVERSATION');
@@ -152,8 +152,7 @@ class API with ChangeNotifier {
               id: tmp['conversations'][i]['Users'][j]['id'],
               firstname: tmp['conversations'][i]['Users'][j]['firstname'],
               lastname: tmp['conversations'][i]['Users'][j]['lastname'],
-              profilePicture: tmp['conversations'][i]['Users'][j]
-                  ['profilePicture'],
+              profilePicture: tmp['conversations'][i]['Users'][j]['profilePicture'],
               darkMode: tmp['conversations'][i]['Users'][j]['darkMode'],
               type: tmp['conversations'][i]['Users'][j]['type'],
             ),
@@ -164,8 +163,7 @@ class API with ChangeNotifier {
           tmpmessage.add(
             Message(
               content: tmp['conversations'][i]['messages'][j]['content'],
-              createdAt: DateTime.parse(
-                  tmp['conversations'][i]['messages'][j]['createdAt']),
+              createdAt: DateTime.parse(tmp['conversations'][i]['messages'][j]['createdAt']),
               userId: tmp['conversations'][i]['messages'][j]['id'],
             ),
           );
@@ -227,8 +225,7 @@ class API with ChangeNotifier {
   }
 
   Future<bool> getOneConversation(String id) async {
-    final http.Response data = await http
-        .get(Uri.parse("$endpoint/conversations/$id"), headers: headers);
+    final http.Response data = await http.get(Uri.parse("$endpoint/conversations/$id"), headers: headers);
 
     updateCookie(data);
 
@@ -265,15 +262,29 @@ class API with ChangeNotifier {
     return true;
   }
 
-  void newMessage(
-      {required String conversationId, required String content}) async {
-    final String body = jsonEncode(
-        <String, String>{'content': content, 'conversationId': conversationId});
+  void newMessage({required String conversationId, required String content}) async {
+    final String body = jsonEncode(<String, String>{'content': content, 'conversationId': conversationId});
     await http.post(
       Uri.parse("$endpoint/messages"),
       headers: headers,
       body: body,
     );
     // print(response.body);
+  }
+
+  Future<void> postProfilPic(String img) async {
+    final String body = jsonEncode(
+      <String, String>{'picture': img},
+    );
+
+    print("LA");
+    // inspect(body);
+    final http.Response response = await http.patch(
+      Uri.parse("$endpoint/users/me/profile-picture"),
+      headers: headers,
+      body: body,
+    );
+    inspect(response);
+    print(response.body);
   }
 }
