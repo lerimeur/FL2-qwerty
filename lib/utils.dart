@@ -281,7 +281,7 @@ class API with ChangeNotifier {
     // inspect(body);
     final http.Response response = await http.patch(
       Uri.parse("$endpoint/users/me/profile-picture"),
-      headers: headers,
+      headers: headersPic,
       body: body,
     );
     inspect(response);
