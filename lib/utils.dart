@@ -6,28 +6,31 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class API with ChangeNotifier {
-  late User user;
-  bool darkmode = false;
+  late User user = User(
+    id: '',
+    firstname: '',
+    lastname: '',
+    profilePicture: '',
+    darkMode: false,
+    type: "",
+  );
   late List<Conversation> convlist = <Conversation>[];
   static const String endpoint = 'https://flutr.fundy.cf';
 
   late Map<String, String> headers = <String, String>{"Content-Type": "application/json"};
-
-  late Map<String, String> headersPic = <String, String>{"Content-Type": "application/x-www-form-urlencoded"};
 
   void updateCookie(http.Response response) {
     final String? rawCookie = response.headers['set-cookie'];
     if (rawCookie != null) {
       final List<String> cookie = rawCookie.split(';');
       headers['cookie'] = cookie[0];
-      headersPic['cookie'] = cookie[0];
     }
   }
 
-  void changedarkmode() {
-    darkmode = !darkmode;
-    notifyListeners();
-  }
+  // void changedarkmode() {
+  // darkmode = !darkmode;
+  // notifyListeners();
+  // }
 
   Future<bool> signin(
     String email,
@@ -59,6 +62,7 @@ class API with ChangeNotifier {
         darkMode: tmp['darkMode'],
         type: tmp['type'],
       );
+      inspect(user);
 
       return true;
     } catch (e) {
@@ -273,18 +277,50 @@ class API with ChangeNotifier {
   }
 
   Future<void> postProfilPic(String img) async {
+    final String body = jsonEncode(<String, String>{
+      'profilePicture': img,
+    });
+
+    final http.Response response = await http.patch(Uri.parse("$endpoint/users/me"), headers: headers, body: body);
+    if (response.reasonPhrase == 'OK') {
+      user.profilePicture = img;
+      notifyListeners();
+    }
+  }
+
+  Future<void> updateDarkMode(bool isdark) async {
+    final String body = jsonEncode(<String, bool>{
+      'darkMode': isdark,
+    });
+
+    final http.Response response = await http.patch(Uri.parse("$endpoint/users/me"), headers: headers, body: body);
+    inspect(response);
+    if (response.reasonPhrase == 'OK') {
+      user.darkMode = isdark;
+      notifyListeners();
+    }
+  }
+
+  Future<void> postfirstOrLast(String firstname, String lastname) async {
     final String body = jsonEncode(
-      <String, String>{'picture': img},
+      <String, String>{'firstname': firstname, 'lastname': lastname},
     );
 
-    print("LA");
-    // inspect(body);
-    final http.Response response = await http.patch(
-      Uri.parse("$endpoint/users/me/profile-picture"),
-      headers: headersPic,
-      body: body,
-    );
-    inspect(response);
-    print(response.body);
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse("$endpoint/users/me"),
+        headers: headers,
+        body: body,
+      );
+
+      if (response.reasonPhrase == 'OK') {
+        user.firstname = firstname;
+        user.lastname = lastname;
+        notifyListeners();
+      }
+      inspect(response);
+    } catch (e) {
+      inspect(e);
+    }
   }
 }

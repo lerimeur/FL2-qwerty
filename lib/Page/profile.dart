@@ -19,7 +19,7 @@ class Profil extends StatefulWidget {
 }
 
 class _ProfilState extends State<Profil> {
-  late bool darkMode = context.read<API>().darkmode;
+  late bool darkMode = context.read<API>().user.darkMode;
   final ImagePicker _picker = ImagePicker();
   String _image = '';
 
@@ -111,12 +111,12 @@ class _ProfilState extends State<Profil> {
           children: <Widget>[
             const Spacer(flex: 2),
             Text(
-              context.read<API>().user.firstname,
+              context.watch<API>().user.firstname,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             const Spacer(),
             Text(
-              context.read<API>().user.lastname,
+              context.watch<API>().user.lastname,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             const Spacer(flex: 2),
@@ -141,7 +141,7 @@ class _ProfilState extends State<Profil> {
                   activeColor: primaryColor,
                   value: darkMode,
                   onChanged: (bool value) {
-                    context.read<API>().changedarkmode();
+                    context.read<API>().updateDarkMode(value);
                     setState(() {
                       darkMode = value;
                     });

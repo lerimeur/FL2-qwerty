@@ -1,7 +1,9 @@
 import 'package:fl2_qwerty_messenger/Component/button.dart';
 import 'package:fl2_qwerty_messenger/Component/input_text.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
+import 'package:fl2_qwerty_messenger/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Rename extends StatefulWidget {
   const Rename({super.key});
@@ -11,10 +13,35 @@ class Rename extends StatefulWidget {
 }
 
 class _RenameState extends State<Rename> {
-  void handleFirstName(dynamic value) {}
+  String newfirstname = '';
+  String newlastname = '';
 
-  void handleLastName(dynamic value) {}
-  void handleSubmit() {}
+  @override
+  void initState() {
+    super.initState();
+    newfirstname = context.read<API>().user.firstname;
+    newlastname = context.read<API>().user.lastname;
+  }
+
+  void handleFirstName(dynamic value) {
+    setState(() {
+      newfirstname = value;
+    });
+  }
+
+  void handleLastName(dynamic value) {
+    setState(() {
+      newlastname = value;
+    });
+  }
+
+  void handleSubmit() {
+    if (newfirstname == '' || newlastname == '') {
+      return;
+    }
+    context.read<API>().postfirstOrLast(newfirstname, newlastname);
+    Navigator.maybePop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +68,7 @@ class _RenameState extends State<Rename> {
             Button(
               onPressed: handleSubmit,
               label: 'Enregistrer',
-              color: primaryColor,
+              color: secondaryColor,
             )
           ],
         ),

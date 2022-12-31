@@ -53,7 +53,7 @@ class MyBottomBarState extends State<MyBottomBar> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: Image.memory(
-                  const Base64Decoder().convert(context.read<API>().user.profilePicture),
+                  const Base64Decoder().convert(context.watch<API>().user.profilePicture),
                   width: 10,
                   height: 10,
                   fit: BoxFit.fitWidth,
