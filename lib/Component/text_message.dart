@@ -18,11 +18,11 @@ class TextMessage extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.65,
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: kDefaultPadding * 0.75,
-          vertical: kDefaultPadding / 2,
+          horizontal: defaultPadding * 0.75,
+          vertical: defaultPadding / 2,
         ),
         decoration: BoxDecoration(
-          color: kPrimaryColor.withOpacity(sender ? 1 : 0.1),
+          color: secondaryColor.withOpacity(sender ? 1 : 0.1),
           borderRadius: BorderRadius.circular(30),
         ),
         child: Text(

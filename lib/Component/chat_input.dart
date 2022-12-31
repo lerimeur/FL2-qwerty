@@ -23,8 +23,8 @@ class _ChatInputFieldState extends State<ChatInputField> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: kDefaultPadding,
-        vertical: kDefaultPadding / 2,
+        horizontal: defaultPadding,
+        vertical: defaultPadding / 2,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -43,19 +43,19 @@ class _ChatInputFieldState extends State<ChatInputField> {
               Icons.photo_camera,
               color: Theme.of(context).buttonTheme.colorScheme?.primary,
             ),
-            const SizedBox(width: kDefaultPadding),
+            const SizedBox(width: defaultPadding),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: kDefaultPadding * 0.75,
+                  horizontal: defaultPadding * 0.75,
                 ),
                 decoration: BoxDecoration(
-                  color: kPrimaryColor.withOpacity(0.05),
+                  color: primaryColor.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(40),
                 ),
                 child: Row(
                   children: <Widget>[
-                    const SizedBox(width: kDefaultPadding / 4),
+                    const SizedBox(width: defaultPadding / 4),
                     Expanded(
                       child: TextField(
                         keyboardType: TextInputType.multiline,

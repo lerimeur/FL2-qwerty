@@ -53,7 +53,7 @@ class _SearchState extends State<Search> {
                         });
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(left: kDefaultPadding, right: kDefaultPadding),
+                        padding: const EdgeInsets.only(left: defaultPadding, right: defaultPadding),
                         child: Row(
                           children: <Widget>[
                             const CircleAvatar(),

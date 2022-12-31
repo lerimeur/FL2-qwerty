@@ -47,7 +47,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: listMessage(),
             ),
           ),
@@ -59,7 +59,11 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   Widget listMessage() {
     if (messageList.isEmpty) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(
+        child: CircularProgressIndicator(
+          color: secondaryColor,
+        ),
+      );
     }
 
     return ListView.builder(
@@ -72,7 +76,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
         final bool sender = messageList[index].userId == context.read<API>().user.id;
 
         return Padding(
-          padding: const EdgeInsets.only(top: kDefaultPadding),
+          padding: const EdgeInsets.only(top: defaultPadding),
           child: Row(
             mainAxisAlignment: sender ? MainAxisAlignment.end : MainAxisAlignment.start,
             children:
@@ -81,7 +85,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 //     radius: 12,
                 //     backgroundImage: AssetImage("assets/images/user_3.png"),
                 //   ),
-                //   const SizedBox(width: kDefaultPadding / 2),
+                //   const SizedBox(width: defaultPadding / 2),
                 // ],
                 <Widget>[TextMessage(message: messageList[index].content, sender: sender)],
           ),
@@ -99,7 +103,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
           const CircleAvatar(
             backgroundImage: AssetImage("assets/images/user_3.png"),
           ),
-          const SizedBox(width: kDefaultPadding * 0.75),
+          const SizedBox(width: defaultPadding * 0.75),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

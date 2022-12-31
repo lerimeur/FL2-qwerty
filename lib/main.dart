@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: context.watch<API>().darkmode ? darkThemeData(context) : lightThemeData(context),
+      theme: context.watch<API>().user.darkMode ? darkThemeData(context) : lightThemeData(context),
       home: AnimatedSplashScreen(
         splashIconSize: 200.0,
         duration: 3000,

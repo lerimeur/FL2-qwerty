@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 
-const Color kPrimaryColor = Color(0xFF00BF6D);
-const Color kSecondaryColor = Color(0xFFFE9901);
-const Color kContentColorLightTheme = Color(0xFF1D1D35);
-const Color kContentColorDarkTheme = Color(0xFFF5FCF9);
-const Color kWarninngColor = Color(0xFFF3BB1C);
-const Color kErrorColor = Color(0xFFF03738);
+const Color primaryColor = Color.fromARGB(255, 169, 167, 167);
+const Color secondaryColor = Color.fromARGB(255, 80, 115, 255);
+const Color contentColorLightTheme = Color(0xFF1D1D35);
+const Color contentColorDarkTheme = Color(0xFFF5FCF9);
+const Color warninngColor = Color(0xFFF3BB1C);
+const Color errorColor = Color(0xFFF03738);
 
-const double kDefaultPadding = 20.0;
+const double defaultPadding = 20.0;
 
 class User {
-  User(
-      {required this.id,
-      required this.firstname,
-      required this.lastname,
-      required this.profilePicture,
-      required this.darkMode,
-      required this.type});
+  User({
+    required this.id,
+    required this.firstname,
+    required this.lastname,
+    required this.profilePicture,
+    required this.darkMode,
+    required this.type,
+  });
   final String id;
-  final String firstname;
-  final String lastname;
-  final String profilePicture;
-  final bool darkMode;
+  String firstname;
+  String lastname;
+  String profilePicture;
+  bool darkMode;
   final String type;
   String getFirstname() => firstname;
   String getLastname() => lastname;
+  // void setFirstname(String value) => firstname = value;
+  // void setLastname(String value) => lastname = value;
 }
 
 class Message {
-  Message(
-      {required this.content, required this.createdAt, required this.userId});
+  Message({required this.content, required this.createdAt, required this.userId});
   final String content;
   final DateTime createdAt;
   final String userId;
