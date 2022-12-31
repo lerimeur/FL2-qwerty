@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -39,7 +38,6 @@ class _ProfilState extends State<Profil> {
   @override
   void initState() {
     super.initState();
-    print('LA2');
     _image = context.read<API>().user.profilePicture;
   }
 

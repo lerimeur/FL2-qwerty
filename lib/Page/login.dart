@@ -1,7 +1,6 @@
 import 'package:fl2_qwerty_messenger/Component/button.dart';
 import 'package:fl2_qwerty_messenger/Component/input_text.dart';
 import 'package:fl2_qwerty_messenger/Component/web_foundation.dart';
-import 'package:fl2_qwerty_messenger/Page/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,6 @@ class _LoginState extends State<Login> {
   }
 
   void handleLogin() {
-    // print('LOG IN $email $password');
     context.read<API>().signup(email, password).then((bool value) {
       if (value) {
         Navigator.of(context).push(

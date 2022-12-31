@@ -47,19 +47,21 @@ class _WebFoundationState extends State<WebFoundation> {
         ],
         title: Text(context.watch<API>().user.firstname),
       ),
-      body: Row(children: [
-        Container(
-          color: Colors.green,
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width * 0.30,
-          child: Home(),
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.red,
+      body: Row(
+        children: <Widget>[
+          Container(
+            color: Colors.green,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width * 0.30,
+            child: const Home(),
           ),
-        )
-      ]),
+          Expanded(
+            child: Container(
+              color: Colors.red,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

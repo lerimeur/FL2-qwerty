@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Component/bottom_bar.dart';
-import 'home.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});

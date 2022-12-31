@@ -122,7 +122,6 @@ class API with ChangeNotifier {
           ),
         );
       }
-      print(tmpusers);
 
       return tmpusers;
     } catch (e) {
@@ -138,7 +137,6 @@ class API with ChangeNotifier {
       // print('GET ALL CONVERSATION');
       final dynamic tmp = json.decode(data.body);
 
-      // inspect(tmp);
       final List<Conversation> tmpconv = <Conversation>[];
 
       for (int i = 0; i < tmp['conversations'].length; i++) {
@@ -190,7 +188,6 @@ class API with ChangeNotifier {
         tmpusers.clear();
       }
 
-      // inspect(tmpconv);
       convlist = tmpconv;
       notifyListeners();
     } catch (e) {
@@ -218,14 +215,6 @@ class API with ChangeNotifier {
     } catch (e) {
       return null;
     }
-
-    // print(data.body);
-    //   inspect(tmp);
-    //   for (final elem in tmp) {
-    //     inspect(elem);
-    //   }
-
-    // return response;
   }
 
   Future<bool> getOneConversation(String id) async {
@@ -273,7 +262,6 @@ class API with ChangeNotifier {
       headers: headers,
       body: body,
     );
-    // print(response.body);
   }
 
   Future<void> postProfilPic(String img) async {

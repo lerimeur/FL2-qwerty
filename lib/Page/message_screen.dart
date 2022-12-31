@@ -60,9 +60,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
   Widget listMessage() {
     if (messageList.isEmpty) {
       return const Center(
-          child: CircularProgressIndicator(
-        color: secondaryColor,
-      ));
+        child: CircularProgressIndicator(
+          color: secondaryColor,
+        ),
+      );
     }
 
     return ListView.builder(
