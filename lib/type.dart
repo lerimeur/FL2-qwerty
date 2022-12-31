@@ -17,12 +17,14 @@ class User {
     required this.profilePicture,
     required this.darkMode,
     required this.type,
+    required this.banned,
   });
   final String id;
   String firstname;
   String lastname;
   String profilePicture;
   bool darkMode;
+  bool banned;
   final String type;
   String getFirstname() => firstname;
   String getLastname() => lastname;
@@ -31,7 +33,8 @@ class User {
 }
 
 class Message {
-  Message({required this.content, required this.createdAt, required this.userId});
+  Message(
+      {required this.content, required this.createdAt, required this.userId});
   final String content;
   final DateTime createdAt;
   final String userId;

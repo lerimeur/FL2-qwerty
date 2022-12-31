@@ -1,3 +1,4 @@
+import 'package:fl2_qwerty_messenger/Component/button.dart';
 import 'package:fl2_qwerty_messenger/Component/input_text.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,8 @@ class _SearchState extends State<Search> {
                     height: 50,
                     child: InkWell(
                       onTap: () {
-                        context.read<API>().newConversation(<String>[userList[index].id]).then((dynamic data) {
+                        context.read<API>().newConversation(
+                            <String>[userList[index].id]).then((dynamic data) {
                           if (data != null) {
                             Navigator.of(context).pop();
                             context.read<API>().getAllConversations();
@@ -53,7 +55,8 @@ class _SearchState extends State<Search> {
                         });
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(left: defaultPadding, right: defaultPadding),
+                        padding: const EdgeInsets.only(
+                            left: defaultPadding, right: defaultPadding),
                         child: Row(
                           children: <Widget>[
                             const CircleAvatar(),
@@ -61,6 +64,50 @@ class _SearchState extends State<Search> {
                             Text(
                               '${userList[index].firstname} ${userList[index].lastname}',
                             ),
+                            const SizedBox(width: 80),
+                            if (context.read<API>().user.type == 'ADMIN')
+                              if (!userList[index].banned)
+                                MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  elevation: 2,
+                                  color: Theme.of(context)
+                                      .buttonTheme
+                                      .colorScheme
+                                      ?.primary,
+                                  textColor: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.color,
+                                  onPressed: () {
+                                    context
+                                        .read<API>()
+                                        .banUser(userList[index].id);
+                                  },
+                                  child: const Text("Bannir"),
+                                )
+                              else
+                                MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  elevation: 2,
+                                  color: Theme.of(context)
+                                      .buttonTheme
+                                      .colorScheme
+                                      ?.primary,
+                                  textColor: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.color,
+                                  onPressed: () {
+                                    context
+                                        .read<API>()
+                                        .unbanUser(userList[index].id);
+                                  },
+                                  child: const Text("Débannir"),
+                                )
                           ],
                         ),
                       ),

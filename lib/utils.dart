@@ -1,9 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
+final BaseOptions options =
+    BaseOptions(extra: <String, dynamic>{"withCredentials": true});
+
+Dio dio = Dio(options);
 
 class API with ChangeNotifier {
   late User user = User(
@@ -13,24 +18,22 @@ class API with ChangeNotifier {
     profilePicture: '',
     darkMode: false,
     type: "",
+    banned: false,
   );
   late List<Conversation> convlist = <Conversation>[];
-  static const String endpoint = 'https://flutr.fundy.cf';
+  static const String endpoint = 'http://localhost:8002';
 
-  late Map<String, String> headers = <String, String>{"Content-Type": "application/json"};
+  late Map<String, String> headers = <String, String>{
+    "Content-Type": "application/json"
+  };
 
-  void updateCookie(http.Response response) {
-    final String? rawCookie = response.headers['set-cookie'];
+  void updateCookie(Response response) {
+    final List<String>? rawCookie = response.headers['set-cookie'];
     if (rawCookie != null) {
-      final List<String> cookie = rawCookie.split(';');
+      final List<String> cookie = rawCookie[0].split(';');
       headers['cookie'] = cookie[0];
     }
   }
-
-  // void changedarkmode() {
-  // darkmode = !darkmode;
-  // notifyListeners();
-  // }
 
   Future<bool> signin(
     String email,
@@ -46,21 +49,23 @@ class API with ChangeNotifier {
     });
 
     try {
-      final http.Response data = await http.post(
-        Uri.parse("$endpoint/auth/signup"),
-        headers: headers,
-        body: body,
+      final Response data = await dio.post(
+        "$endpoint/auth/signup",
+        data: body,
+        options: Options(
+          headers: headers,
+        ),
       );
 
       updateCookie(data);
-      final dynamic tmp = json.decode(data.body);
       user = User(
-        id: tmp['id'],
-        firstname: tmp['firstname'],
-        lastname: tmp['lastname'],
-        profilePicture: tmp['profilePicture'],
-        darkMode: tmp['darkMode'],
-        type: tmp['type'],
+        id: data.data['id'],
+        firstname: data.data['firstname'],
+        lastname: data.data['lastname'],
+        profilePicture: data.data['profilePicture'],
+        darkMode: data.data['darkMode'],
+        type: data.data['type'],
+        banned: data.data['banned'],
       );
       inspect(user);
 
@@ -77,22 +82,24 @@ class API with ChangeNotifier {
     });
 
     try {
-      final http.Response data = await http.post(
-        Uri.parse("$endpoint/auth/signin"),
-        headers: headers,
-        body: body,
+      final Response data = await dio.post(
+        "$endpoint/auth/signin",
+        data: body,
+        options: Options(
+          headers: headers,
+        ),
       );
 
       updateCookie(data);
-      final dynamic tmp = json.decode(data.body);
 
       user = User(
-        id: tmp['id'],
-        firstname: tmp['firstname'],
-        lastname: tmp['lastname'],
-        profilePicture: tmp['profilePicture'],
-        darkMode: tmp['darkMode'],
-        type: tmp['type'],
+        id: data.data['id'],
+        firstname: data.data['firstname'],
+        lastname: data.data['lastname'],
+        profilePicture: data.data['profilePicture'],
+        darkMode: data.data['darkMode'],
+        type: data.data['type'],
+        banned: data.data['banned'],
       );
 
       return true;
@@ -103,22 +110,24 @@ class API with ChangeNotifier {
 
   Future<List<User>> getAllUsers() async {
     try {
-      final http.Response data = await http.get(
-        Uri.parse("$endpoint/users"),
-        headers: headers,
+      final Response data = await dio.get(
+        "$endpoint/users",
+        options: Options(
+          headers: headers,
+        ),
       );
-      final dynamic tmp = json.decode(data.body);
       final List<User> tmpusers = <User>[];
 
-      for (int i = 0; i < tmp.length; i++) {
+      for (int i = 0; i < data.data.length; i++) {
         tmpusers.add(
           User(
-            id: tmp[i]['id'],
-            firstname: tmp[i]['firstname'],
-            lastname: tmp[i]['lastname'],
-            profilePicture: tmp[i]['profilePicture'],
-            darkMode: tmp[i]['darkMode'],
-            type: tmp[i]['type'],
+            id: data.data[i]['id'],
+            firstname: data.data[i]['firstname'],
+            lastname: data.data[i]['lastname'],
+            profilePicture: data.data[i]['profilePicture'],
+            darkMode: data.data[i]['darkMode'],
+            type: data.data[i]['type'],
+            banned: data.data[i]['banned'],
           ),
         );
       }
@@ -129,44 +138,83 @@ class API with ChangeNotifier {
     }
   }
 
+  void banUser(String id) async {
+    try {
+      await dio.post(
+        "$endpoint/users/ban/$id",
+        options: Options(
+          headers: headers,
+        ),
+      );
+      getAllConversations();
+    } catch (e) {
+      inspect(e);
+    }
+  }
+
+  void unbanUser(String id) async {
+    try {
+      await dio.post(
+        "$endpoint/users/ban/$id",
+        options: Options(
+          headers: headers,
+        ),
+      );
+      getAllConversations();
+    } catch (e) {
+      inspect(e);
+    }
+  }
+
   void getAllConversations() async {
     try {
-      final http.Response data = await http.get(Uri.parse("$endpoint/conversations"), headers: headers);
+      final Response data = await dio.get(
+        "$endpoint/conversations",
+        options: Options(
+          headers: headers,
+        ),
+      );
 
       updateCookie(data);
       // print('GET ALL CONVERSATION');
-      final dynamic tmp = json.decode(data.body);
 
       final List<Conversation> tmpconv = <Conversation>[];
 
-      for (int i = 0; i < tmp['conversations'].length; i++) {
+      for (int i = 0; i < data.data['conversations'].length; i++) {
         final List<User> tmpusers = <User>[];
         final List<Message> tmpmessage = <Message>[];
         String tmptitre = 'titre';
 
-        for (int j = 0; j < tmp['conversations'][i]['Users'].length; j++) {
-          if (tmp['conversations'][i]['Users'][j]['id'] != user.id) {
-            tmptitre = tmp['conversations'][i]['Users'][j]['firstname'];
+        for (int j = 0;
+            j < data.data['conversations'][i]['Users'].length;
+            j++) {
+          if (data.data['conversations'][i]['Users'][j]['id'] != user.id) {
+            tmptitre = data.data['conversations'][i]['Users'][j]['firstname'];
           }
 
           tmpusers.add(
             User(
-              id: tmp['conversations'][i]['Users'][j]['id'],
-              firstname: tmp['conversations'][i]['Users'][j]['firstname'],
-              lastname: tmp['conversations'][i]['Users'][j]['lastname'],
-              profilePicture: tmp['conversations'][i]['Users'][j]['profilePicture'],
-              darkMode: tmp['conversations'][i]['Users'][j]['darkMode'],
-              type: tmp['conversations'][i]['Users'][j]['type'],
+              id: data.data['conversations'][i]['Users'][j]['id'],
+              firstname: data.data['conversations'][i]['Users'][j]['firstname'],
+              lastname: data.data['conversations'][i]['Users'][j]['lastname'],
+              profilePicture: data.data['conversations'][i]['Users'][j]
+                  ['profilePicture'],
+              darkMode: data.data['conversations'][i]['Users'][j]['darkMode'],
+              type: data.data['conversations'][i]['Users'][j]['type'],
+              banned: data.data['conversations'][i]['Users'][j]['banned'],
             ),
           );
         }
 
-        for (int j = 0; j < tmp['conversations'][i]['messages'].length; j++) {
+        for (int j = 0;
+            j < data.data['conversations'][i]['messages'].length;
+            j++) {
           tmpmessage.add(
             Message(
-              content: tmp['conversations'][i]['messages'][j]['content'],
-              createdAt: DateTime.parse(tmp['conversations'][i]['messages'][j]['createdAt']),
-              userId: tmp['conversations'][i]['messages'][j]['id'],
+              content: data.data['conversations'][i]['messages'][j]['content'],
+              createdAt: DateTime.parse(
+                  data.data['conversations'][i]['messages'][j]['createdAt']),
+              userId: data.data['conversations'][i]['messages'][j]['id'],
             ),
           );
         }
@@ -177,7 +225,7 @@ class API with ChangeNotifier {
         }
         tmpconv.add(
           Conversation(
-            id: tmp['conversations'][i]['id'],
+            id: data.data['conversations'][i]['id'],
             title: tmptitre,
             lastMessage: tmplast,
             messages: tmpmessage,
@@ -201,33 +249,38 @@ class API with ChangeNotifier {
     try {
       final String body = jsonEncode(<String, List<String>>{'Users': userId});
 
-      final http.Response data = await http.post(
-        Uri.parse("$endpoint/conversations"),
-        headers: headers,
-        body: body,
+      final Response data = await dio.post(
+        "$endpoint/conversations",
+        data: body,
+        options: Options(
+          headers: headers,
+        ),
       );
       // print("CREATE CONV");
 
       updateCookie(data);
-      final dynamic tmp = json.decode(data.body);
-      inspect(tmp);
-      return tmp;
+
+      inspect(data.data);
+      return data.data;
     } catch (e) {
       return null;
     }
   }
 
   Future<bool> getOneConversation(String id) async {
-    final http.Response data = await http.get(Uri.parse("$endpoint/conversations/$id"), headers: headers);
+    final Response data = await dio.get(
+      "$endpoint/conversations/$id",
+      options: Options(
+        headers: headers,
+      ),
+    );
 
     updateCookie(data);
 
-    final dynamic tmp = json.decode(data.body);
-
-    inspect(tmp);
+    inspect(data.data);
     final List<Message> tmplist = <Message>[];
 
-    for (final dynamic item in tmp['messages']) {
+    for (final dynamic item in data.data['messages']) {
       tmplist.add(
         Message(
           content: item['content'],
@@ -255,12 +308,16 @@ class API with ChangeNotifier {
     return true;
   }
 
-  void newMessage({required String conversationId, required String content}) async {
-    final String body = jsonEncode(<String, String>{'content': content, 'conversationId': conversationId});
-    await http.post(
-      Uri.parse("$endpoint/messages"),
-      headers: headers,
-      body: body,
+  void newMessage(
+      {required String conversationId, required String content}) async {
+    final String body = jsonEncode(
+        <String, String>{'content': content, 'conversationId': conversationId});
+    await dio.post(
+      "$endpoint/messages",
+      data: body,
+      options: Options(
+        headers: headers,
+      ),
     );
   }
 
@@ -269,8 +326,8 @@ class API with ChangeNotifier {
       'profilePicture': img,
     });
 
-    final http.Response response = await http.patch(Uri.parse("$endpoint/users/me"), headers: headers, body: body);
-    if (response.reasonPhrase == 'OK') {
+    final Response response = await dio.patch("$endpoint/users/me", data: body);
+    if (response.statusCode == 200) {
       user.profilePicture = img;
       notifyListeners();
     }
@@ -281,9 +338,15 @@ class API with ChangeNotifier {
       'darkMode': isdark,
     });
 
-    final http.Response response = await http.patch(Uri.parse("$endpoint/users/me"), headers: headers, body: body);
+    final Response response = await dio.patch(
+      "$endpoint/users/me",
+      data: body,
+      options: Options(
+        headers: headers,
+      ),
+    );
     inspect(response);
-    if (response.reasonPhrase == 'OK') {
+    if (response.statusCode == 200) {
       user.darkMode = isdark;
       notifyListeners();
     }
@@ -295,13 +358,15 @@ class API with ChangeNotifier {
     );
 
     try {
-      final http.Response response = await http.patch(
-        Uri.parse("$endpoint/users/me"),
-        headers: headers,
-        body: body,
+      final Response response = await dio.patch(
+        "$endpoint/users/me",
+        data: body,
+        options: Options(
+          headers: headers,
+        ),
       );
 
-      if (response.reasonPhrase == 'OK') {
+      if (response.statusCode == 200) {
         user.firstname = firstname;
         user.lastname = lastname;
         notifyListeners();
