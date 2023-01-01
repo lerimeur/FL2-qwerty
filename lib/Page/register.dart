@@ -1,10 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:fl2_qwerty_messenger/Component/button.dart';
 import 'package:fl2_qwerty_messenger/Component/input_text.dart';
-import 'package:fl2_qwerty_messenger/Component/web_foundation.dart';
 import 'package:fl2_qwerty_messenger/Page/login.dart';
 import 'package:fl2_qwerty_messenger/utils.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +31,8 @@ class _RegisterState extends State<Register> {
           Navigator.of(context).push(
             MaterialPageRoute<dynamic>(
               builder: (BuildContext context) {
-                return kIsWeb ? const WebFoundation() : const MyBottomBar();
+                // return kIsWeb ? const WebFoundation() : const MyBottomBar();
+                return const MyBottomBar();
               },
             ),
           );

@@ -28,21 +28,17 @@ class User {
   final String type;
   String getFirstname() => firstname;
   String getLastname() => lastname;
-  // void setFirstname(String value) => firstname = value;
-  // void setLastname(String value) => lastname = value;
 }
 
 class Message {
-  Message(
-      {required this.content, required this.createdAt, required this.userId});
+  Message({
+    required this.content,
+    required this.createdAt,
+    required this.userId,
+  });
   final String content;
   final DateTime createdAt;
   final String userId;
-
-  // @override
-  // bool operator ==(Object other) {
-  //   return (other is Message) && other.content == content && other.createdAt == createdAt && other.userId == userId;
-  // }
 }
 
 class Conversation {

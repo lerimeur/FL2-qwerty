@@ -5,8 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
 
-final BaseOptions options =
-    BaseOptions(extra: <String, dynamic>{"withCredentials": true});
+final BaseOptions options = BaseOptions(extra: <String, dynamic>{"withCredentials": true});
 
 Dio dio = Dio(options);
 
@@ -23,11 +22,9 @@ class API with ChangeNotifier {
   late List<Conversation> convlist = <Conversation>[];
   static const String endpoint = 'http://localhost:8002';
 
-  late Map<String, String> headers = <String, String>{
-    "Content-Type": "application/json"
-  };
+  late Map<String, String> headers = <String, String>{"Content-Type": "application/json"};
 
-  void updateCookie(Response response) {
+  void updateCookie(Response<dynamic> response) {
     final List<String>? rawCookie = response.headers['set-cookie'];
     if (rawCookie != null) {
       final List<String> cookie = rawCookie[0].split(';');
@@ -49,7 +46,7 @@ class API with ChangeNotifier {
     });
 
     try {
-      final Response data = await dio.post(
+      final Response<dynamic> data = await dio.post(
         "$endpoint/auth/signup",
         data: body,
         options: Options(
@@ -82,7 +79,7 @@ class API with ChangeNotifier {
     });
 
     try {
-      final Response data = await dio.post(
+      final Response<dynamic> data = await dio.post(
         "$endpoint/auth/signin",
         data: body,
         options: Options(
@@ -110,7 +107,7 @@ class API with ChangeNotifier {
 
   Future<List<User>> getAllUsers() async {
     try {
-      final Response data = await dio.get(
+      final Response<dynamic> data = await dio.get(
         "$endpoint/users",
         options: Options(
           headers: headers,
@@ -168,7 +165,7 @@ class API with ChangeNotifier {
 
   void getAllConversations() async {
     try {
-      final Response data = await dio.get(
+      final Response<dynamic> data = await dio.get(
         "$endpoint/conversations",
         options: Options(
           headers: headers,
@@ -185,9 +182,7 @@ class API with ChangeNotifier {
         final List<Message> tmpmessage = <Message>[];
         String tmptitre = 'titre';
 
-        for (int j = 0;
-            j < data.data['conversations'][i]['Users'].length;
-            j++) {
+        for (int j = 0; j < data.data['conversations'][i]['Users'].length; j++) {
           if (data.data['conversations'][i]['Users'][j]['id'] != user.id) {
             tmptitre = data.data['conversations'][i]['Users'][j]['firstname'];
           }
@@ -197,8 +192,7 @@ class API with ChangeNotifier {
               id: data.data['conversations'][i]['Users'][j]['id'],
               firstname: data.data['conversations'][i]['Users'][j]['firstname'],
               lastname: data.data['conversations'][i]['Users'][j]['lastname'],
-              profilePicture: data.data['conversations'][i]['Users'][j]
-                  ['profilePicture'],
+              profilePicture: data.data['conversations'][i]['Users'][j]['profilePicture'],
               darkMode: data.data['conversations'][i]['Users'][j]['darkMode'],
               type: data.data['conversations'][i]['Users'][j]['type'],
               banned: data.data['conversations'][i]['Users'][j]['banned'],
@@ -206,14 +200,11 @@ class API with ChangeNotifier {
           );
         }
 
-        for (int j = 0;
-            j < data.data['conversations'][i]['messages'].length;
-            j++) {
+        for (int j = 0; j < data.data['conversations'][i]['messages'].length; j++) {
           tmpmessage.add(
             Message(
               content: data.data['conversations'][i]['messages'][j]['content'],
-              createdAt: DateTime.parse(
-                  data.data['conversations'][i]['messages'][j]['createdAt']),
+              createdAt: DateTime.parse(data.data['conversations'][i]['messages'][j]['createdAt']),
               userId: data.data['conversations'][i]['messages'][j]['id'],
             ),
           );
@@ -249,7 +240,7 @@ class API with ChangeNotifier {
     try {
       final String body = jsonEncode(<String, List<String>>{'Users': userId});
 
-      final Response data = await dio.post(
+      final Response<dynamic> data = await dio.post(
         "$endpoint/conversations",
         data: body,
         options: Options(
@@ -268,7 +259,7 @@ class API with ChangeNotifier {
   }
 
   Future<bool> getOneConversation(String id) async {
-    final Response data = await dio.get(
+    final Response<dynamic> data = await dio.get(
       "$endpoint/conversations/$id",
       options: Options(
         headers: headers,
@@ -308,10 +299,8 @@ class API with ChangeNotifier {
     return true;
   }
 
-  void newMessage(
-      {required String conversationId, required String content}) async {
-    final String body = jsonEncode(
-        <String, String>{'content': content, 'conversationId': conversationId});
+  void newMessage({required String conversationId, required String content}) async {
+    final String body = jsonEncode(<String, String>{'content': content, 'conversationId': conversationId});
     await dio.post(
       "$endpoint/messages",
       data: body,
@@ -326,7 +315,7 @@ class API with ChangeNotifier {
       'profilePicture': img,
     });
 
-    final Response response = await dio.patch("$endpoint/users/me", data: body);
+    final Response<dynamic> response = await dio.patch("$endpoint/users/me", data: body);
     if (response.statusCode == 200) {
       user.profilePicture = img;
       notifyListeners();
@@ -338,7 +327,7 @@ class API with ChangeNotifier {
       'darkMode': isdark,
     });
 
-    final Response response = await dio.patch(
+    final Response<dynamic> response = await dio.patch(
       "$endpoint/users/me",
       data: body,
       options: Options(
@@ -358,7 +347,7 @@ class API with ChangeNotifier {
     );
 
     try {
-      final Response response = await dio.patch(
+      final Response<dynamic> response = await dio.patch(
         "$endpoint/users/me",
         data: body,
         options: Options(
