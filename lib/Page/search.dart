@@ -65,10 +65,10 @@ class _SearchState extends State<Search> {
                         child: Row(
                           children: <Widget>[
                             const CircleAvatar(),
-                            const Spacer(),
+                            const SizedBox(width: 20),
                             Text(
-                              name.length > 15
-                                  ? '${name.substring(0, 15)}...'
+                              name.length > 20
+                                  ? '${name.substring(0, 20)}...'
                                   : name,
                             ),
                             const Spacer(flex: 2),
