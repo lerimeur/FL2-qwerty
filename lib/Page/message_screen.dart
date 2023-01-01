@@ -34,7 +34,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
     inspect(widget.conv);
     super.initState();
     messageList = widget.conv.messages;
-    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
+    // timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
   }
 
   void refresh() {
@@ -71,28 +71,19 @@ class _MessagesScreenState extends State<MessagesScreen> {
       );
     }
 
+    messageList.sort((Message a, Message b) {
+      return a.createdAt.compareTo(b.createdAt);
+    });
+
     return ListView.builder(
       itemCount: messageList.length,
       itemBuilder: (BuildContext context, int index) {
-        messageList.sort((Message a, Message b) {
-          return a.createdAt.compareTo(b.createdAt);
-        });
-
         final bool sender = messageList[index].userId == context.read<API>().user.id;
-
         return Padding(
           padding: const EdgeInsets.only(top: defaultPadding),
           child: Row(
             mainAxisAlignment: sender ? MainAxisAlignment.end : MainAxisAlignment.start,
-            children:
-                // if (!sender) ...<Widget>[
-                //   const CircleAvatar(
-                //     radius: 12,
-                //     backgroundImage: AssetImage("assets/images/user_3.png"),
-                //   ),
-                //   const SizedBox(width: defaultPadding / 2),
-                // ],
-                <Widget>[TextMessage(message: messageList[index].content, sender: sender)],
+            children: <Widget>[TextMessage(message: messageList[index].content, sender: sender)],
           ),
         );
       },

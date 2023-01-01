@@ -36,7 +36,6 @@ class _HomeState extends State<Home> {
 
         // Column(
         //   children:
-
         //    <Widget>[
         //     Container(
         //       // width: MediaQuery.of(context).size.width * 0.90 ,
@@ -57,6 +56,13 @@ class _HomeState extends State<Home> {
           lastMessage: context.read<API>().convlist[index].lastMessage,
           id: context.read<API>().convlist[index].id,
           onSelectedChat: () => handleSelectedChat(context.read<API>().convlist[index]),
+          profilpic: context
+              .read<API>()
+              .convlist[index]
+              .userlist
+              .where((User e) => e.id != context.read<API>().user.id)
+              .first
+              .profilePicture,
         );
       },
     );

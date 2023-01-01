@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
 
+import 'package:fluttertoast/fluttertoast.dart';
+
 final BaseOptions options = BaseOptions(extra: <String, dynamic>{"withCredentials": true});
 
 Dio dio = Dio(options);
@@ -68,6 +70,14 @@ class API with ChangeNotifier {
 
       return true;
     } catch (e) {
+      await Fluttertoast.showToast(
+        msg: e is DioError ? e.response?.data['message'] ?? 'error' : 'error',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 30.0,
+      );
       return false;
     }
   }
@@ -87,6 +97,7 @@ class API with ChangeNotifier {
         ),
       );
 
+      inspect(data);
       updateCookie(data);
 
       user = User(
@@ -101,6 +112,14 @@ class API with ChangeNotifier {
 
       return true;
     } catch (e) {
+      await Fluttertoast.showToast(
+        msg: e is DioError ? e.response?.data['message'] ?? 'error' : 'error',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 30.0,
+      );
       return false;
     }
   }
@@ -205,7 +224,7 @@ class API with ChangeNotifier {
             Message(
               content: data.data['conversations'][i]['messages'][j]['content'],
               createdAt: DateTime.parse(data.data['conversations'][i]['messages'][j]['createdAt']),
-              userId: data.data['conversations'][i]['messages'][j]['id'],
+              userId: data.data['conversations'][i]['messages'][j]['userId'],
             ),
           );
         }
@@ -223,12 +242,10 @@ class API with ChangeNotifier {
             userlist: tmpusers,
           ),
         );
-        // tmpmessage.clear();
-        // tmpusers.clear();
       }
 
       convlist = tmpconv;
-      inspect(convlist);
+      // inspect(convlist);
       notifyListeners();
     } catch (e) {
       inspect(e);
@@ -269,7 +286,7 @@ class API with ChangeNotifier {
 
     updateCookie(data);
 
-    inspect(data.data);
+    // inspect(data.data);
     final List<Message> tmplist = <Message>[];
 
     for (final dynamic item in data.data['messages']) {
