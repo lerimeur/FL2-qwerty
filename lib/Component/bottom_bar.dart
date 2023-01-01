@@ -22,7 +22,7 @@ class MyBottomBarState extends State<MyBottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[const Home(), const Profil()];
 
   void _onItemTapped(int index) {
-    inspect(context.read<API>().user);
+    // inspect(context.read<API>().user);
 
     setState(() {
       _selectedIndex = index;
@@ -37,7 +37,6 @@ class MyBottomBarState extends State<MyBottomBar> {
           padding: const EdgeInsets.only(left: defaultPadding),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.grey,
               borderRadius: BorderRadius.circular(50),
             ),
             width: 10,

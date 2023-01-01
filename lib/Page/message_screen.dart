@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   @override
   void initState() {
+    inspect(widget.conv);
     super.initState();
     messageList = widget.conv.messages;
     timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
@@ -36,11 +39,13 @@ class _MessagesScreenState extends State<MessagesScreen> {
 
   void refresh() {
     context.read<API>().getOneConversation(widget.conv.id);
+    setState(() {
+      messageList = context.read<API>().convlist.where((Conversation e) => e.id == widget.conv.id).first.messages;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    messageList = context.watch<API>().convlist.where((Conversation e) => e.id == widget.conv.id).first.messages;
     return Scaffold(
       appBar: buildAppBar(),
       body: Column(
@@ -95,13 +100,28 @@ class _MessagesScreenState extends State<MessagesScreen> {
   }
 
   AppBar buildAppBar() {
+    final String friendPic =
+        widget.conv.userlist.where((User e) => e.id != context.read<API>().user.id).first.profilePicture;
     return AppBar(
       automaticallyImplyLeading: false,
       title: Row(
         children: <Widget>[
           const BackButton(),
-          const CircleAvatar(
-            backgroundImage: AssetImage("assets/images/user_3.png"),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+            ),
+            width: 40,
+            height: 40,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.memory(
+                const Base64Decoder().convert(friendPic),
+                width: 10,
+                height: 10,
+                fit: BoxFit.fitWidth,
+              ),
+            ),
           ),
           const SizedBox(width: defaultPadding * 0.75),
           Column(
@@ -111,10 +131,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 widget.conv.title,
                 style: const TextStyle(fontSize: 16),
               ),
-              const Text(
-                "Active 3m ago",
-                style: TextStyle(fontSize: 12),
-              )
             ],
           )
         ],

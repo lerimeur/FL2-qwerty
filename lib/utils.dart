@@ -223,11 +223,12 @@ class API with ChangeNotifier {
             userlist: tmpusers,
           ),
         );
-        tmpmessage.clear();
-        tmpusers.clear();
+        // tmpmessage.clear();
+        // tmpusers.clear();
       }
 
       convlist = tmpconv;
+      inspect(convlist);
       notifyListeners();
     } catch (e) {
       inspect(e);

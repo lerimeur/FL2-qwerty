@@ -14,8 +14,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String email = 'greg2@gmail.com';
-  String password = 'test1234';
+  String email = '';
+  String password = '';
 
   void setMail(String value) {
     setState(() {
