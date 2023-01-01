@@ -44,6 +44,7 @@ class _ChatState extends State<Chat> {
                   width: 10,
                   height: 10,
                   fit: BoxFit.fitWidth,
+                  gaplessPlayback: true,
                 ),
               ),
             ),

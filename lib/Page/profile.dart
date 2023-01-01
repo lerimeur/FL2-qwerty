@@ -83,6 +83,7 @@ class _ProfilState extends State<Profil> {
                           width: 100.0,
                           height: 100.0,
                           fit: BoxFit.fitWidth,
+                          gaplessPlayback: true,
                         ),
                       ),
                     )
