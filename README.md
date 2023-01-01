@@ -16,7 +16,7 @@ if you want to use the server-side localy: `https://github.com/Axoloot/Messengr_
 
 The project  architecture is based on a simple Provider with all of the Api call and data we will need in the app process. 
 
-Next to that the application stucture is only a BotomBar with few screen around in order to match all of the prerequisites.
+Next to that the application stucture is only a BottomBar with few screen around in order to match all of the prerequisites.
 
 You will have a ConvList screen in order to render all of your actual conversation and an another one to render the conversation.
 
@@ -37,6 +37,14 @@ email_validator: we are using that package to avoid the classic REGEX email issu
 image_picker: we are using this package to simply interact with the phone camera.
 
 
+## Links
 
+[front web](https://messengr.fundy.cf/)
 
+[backend swagger docs](https://messengerdocs.fundy.cf/)
 
+[grafana](https://grafana.fundy.cf/)
+  -> admin:admin
+  -> board flutter
+
+[api url](https://flutr.fundy.cf/)
