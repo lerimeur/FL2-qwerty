@@ -34,13 +34,18 @@ class _MessagesScreenState extends State<MessagesScreen> {
     inspect(widget.conv);
     super.initState();
     messageList = widget.conv.messages;
-    // timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
+    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
   }
 
   void refresh() {
     context.read<API>().getOneConversation(widget.conv.id);
     setState(() {
-      messageList = context.read<API>().convlist.where((Conversation e) => e.id == widget.conv.id).first.messages;
+      messageList = context
+          .read<API>()
+          .convlist
+          .where((Conversation e) => e.id == widget.conv.id)
+          .first
+          .messages;
     });
   }
 
@@ -78,12 +83,16 @@ class _MessagesScreenState extends State<MessagesScreen> {
     return ListView.builder(
       itemCount: messageList.length,
       itemBuilder: (BuildContext context, int index) {
-        final bool sender = messageList[index].userId == context.read<API>().user.id;
+        final bool sender =
+            messageList[index].userId == context.read<API>().user.id;
         return Padding(
           padding: const EdgeInsets.only(top: defaultPadding),
           child: Row(
-            mainAxisAlignment: sender ? MainAxisAlignment.end : MainAxisAlignment.start,
-            children: <Widget>[TextMessage(message: messageList[index].content, sender: sender)],
+            mainAxisAlignment:
+                sender ? MainAxisAlignment.end : MainAxisAlignment.start,
+            children: <Widget>[
+              TextMessage(message: messageList[index].content, sender: sender)
+            ],
           ),
         );
       },
@@ -91,8 +100,10 @@ class _MessagesScreenState extends State<MessagesScreen> {
   }
 
   AppBar buildAppBar() {
-    final String friendPic =
-        widget.conv.userlist.where((User e) => e.id != context.read<API>().user.id).first.profilePicture;
+    final String friendPic = widget.conv.userlist
+        .where((User e) => e.id != context.read<API>().user.id)
+        .first
+        .profilePicture;
     return AppBar(
       automaticallyImplyLeading: false,
       title: Row(
@@ -111,6 +122,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 width: 10,
                 height: 10,
                 fit: BoxFit.fitWidth,
+                gaplessPlayback: true,
               ),
             ),
           ),

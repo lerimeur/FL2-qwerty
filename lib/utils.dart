@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 
-final BaseOptions options = BaseOptions(extra: <String, dynamic>{"withCredentials": true});
+final BaseOptions options =
+    BaseOptions(extra: <String, dynamic>{"withCredentials": true});
 
 Dio dio = Dio(options);
 
@@ -24,7 +25,9 @@ class API with ChangeNotifier {
   late List<Conversation> convlist = <Conversation>[];
   static const String endpoint = 'https://flutr.fundy.cf';
 
-  late Map<String, String> headers = <String, String>{"Content-Type": "application/json"};
+  late Map<String, String> headers = <String, String>{
+    "Content-Type": "application/json"
+  };
 
   void updateCookie(Response<dynamic> response) {
     final List<String>? rawCookie = response.headers['set-cookie'];
@@ -180,7 +183,6 @@ class API with ChangeNotifier {
       );
 
       updateCookie(data);
-      // print('GET ALL CONVERSATION');
 
       final List<Conversation> tmpconv = <Conversation>[];
 
@@ -189,7 +191,9 @@ class API with ChangeNotifier {
         final List<Message> tmpmessage = <Message>[];
         String tmptitre = 'titre';
 
-        for (int j = 0; j < data.data['conversations'][i]['Users'].length; j++) {
+        for (int j = 0;
+            j < data.data['conversations'][i]['Users'].length;
+            j++) {
           if (data.data['conversations'][i]['Users'][j]['id'] != user.id) {
             tmptitre = data.data['conversations'][i]['Users'][j]['firstname'];
           }
@@ -199,7 +203,8 @@ class API with ChangeNotifier {
               id: data.data['conversations'][i]['Users'][j]['id'],
               firstname: data.data['conversations'][i]['Users'][j]['firstname'],
               lastname: data.data['conversations'][i]['Users'][j]['lastname'],
-              profilePicture: data.data['conversations'][i]['Users'][j]['profilePicture'],
+              profilePicture: data.data['conversations'][i]['Users'][j]
+                  ['profilePicture'],
               darkMode: data.data['conversations'][i]['Users'][j]['darkMode'],
               type: data.data['conversations'][i]['Users'][j]['type'],
               banned: data.data['conversations'][i]['Users'][j]['banned'],
@@ -207,11 +212,14 @@ class API with ChangeNotifier {
           );
         }
 
-        for (int j = 0; j < data.data['conversations'][i]['messages'].length; j++) {
+        for (int j = 0;
+            j < data.data['conversations'][i]['messages'].length;
+            j++) {
           tmpmessage.add(
             Message(
               content: data.data['conversations'][i]['messages'][j]['content'],
-              createdAt: DateTime.parse(data.data['conversations'][i]['messages'][j]['createdAt']),
+              createdAt: DateTime.parse(
+                  data.data['conversations'][i]['messages'][j]['createdAt']),
               userId: data.data['conversations'][i]['messages'][j]['userId'],
             ),
           );
@@ -233,7 +241,6 @@ class API with ChangeNotifier {
       }
 
       convlist = tmpconv;
-      // inspect(convlist);
       notifyListeners();
     } catch (e) {
       inspect(e);
@@ -253,7 +260,6 @@ class API with ChangeNotifier {
           headers: headers,
         ),
       );
-      // print("CREATE CONV");
 
       updateCookie(data);
 
@@ -274,7 +280,6 @@ class API with ChangeNotifier {
 
     updateCookie(data);
 
-    // inspect(data.data);
     final List<Message> tmplist = <Message>[];
 
     for (final dynamic item in data.data['messages']) {

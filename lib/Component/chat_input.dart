@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 import '../type.dart';
 
 class ChatInputField extends StatefulWidget {
-  const ChatInputField({Key? key, required this.conv, required this.fct}) : super(key: key);
+  const ChatInputField({Key? key, required this.conv, required this.fct})
+      : super(key: key);
 
   final Function() fct;
   final Conversation conv;
@@ -80,16 +81,14 @@ class _ChatInputFieldState extends State<ChatInputField> {
               color: Theme.of(context).buttonTheme.colorScheme?.primary,
               textColor: Theme.of(context).textTheme.bodyText1?.color,
               onPressed: () async {
-                // print(messageValue.text.toString());
                 if (messageValue.text == '') {
                   return;
                 }
 
-                context
-                    .read<API>()
-                    .newMessage(conversationId: widget.conv.id.toString(), content: messageValue.text.toString());
+                context.read<API>().newMessage(
+                    conversationId: widget.conv.id.toString(),
+                    content: messageValue.text.toString());
 
-                // print(messageValue.text);
                 messageValue.text = "";
                 sleep(const Duration(milliseconds: 1));
 

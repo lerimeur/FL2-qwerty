@@ -18,11 +18,12 @@ class MyBottomBar extends StatefulWidget {
 class MyBottomBarState extends State<MyBottomBar> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[const Home(), const Profil()];
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Home(),
+    const Profil()
+  ];
 
   void _onItemTapped(int index) {
-    // inspect(context.read<API>().user);
-
     setState(() {
       _selectedIndex = index;
     });
@@ -45,10 +46,12 @@ class MyBottomBarState extends State<MyBottomBar> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: Image.memory(
-                  const Base64Decoder().convert(context.watch<API>().user.profilePicture),
+                  const Base64Decoder()
+                      .convert(context.watch<API>().user.profilePicture),
                   width: 10,
                   height: 10,
                   fit: BoxFit.fitWidth,
+                  gaplessPlayback: true,
                 ),
               ),
             ),
