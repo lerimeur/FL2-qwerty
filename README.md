@@ -10,7 +10,7 @@ In order to use the app you can clone the repository execute in your terminal
 
 `flutter run`
 
-if you want to use the server-side localy: `metre le liens du back`
+if you want to use the server-side localy: `https://github.com/Axoloot/Messengr_backend`
 
 ### Architecture
 
