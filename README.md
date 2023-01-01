@@ -36,6 +36,8 @@ email_validator: we are using that package to avoid the classic REGEX email issu
 
 image_picker: we are using this package to simply interact with the phone camera.
 
+fluttertoast: We use this package to create a toaster that will pop to inform the end of an action.
+
 
 ## Links
 
