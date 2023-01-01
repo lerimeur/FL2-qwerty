@@ -1,16 +1,42 @@
 # fl2_qwerty_messenger
 
-A new Flutter project.
-
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is the starting point of a messenger app.
+With this project you can create an account a discuss with your friends.
 
-A few resources to get you started if this is your first Flutter project:
+## For developers
+In order to use the app you can clone the repository execute in your terminal
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+`flutter run`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+if you want to use the server-side localy: `metre le liens du back`
+
+### Architecture
+
+The project  architecture is based on a simple Provider with all of the Api call and data we will need in the app process. 
+
+Next to that the application stucture is only a BotomBar with few screen around in order to match all of the prerequisites.
+
+You will have a ConvList screen in order to render all of your actual conversation and an another one to render the conversation.
+
+You will have a Profile screen in order to change the darkmode or your profile picture / firstname lastname.
+
+Moreover you will have a ConvCreation screen in order to as expected create a conversation.
+
+
+## External librairies
+we use few libraries
+
+animated_splash_screen: as the name of the package we use that package in order to have a simple animation on the splash screen we are using that because we didnt have any designer in our team so we found diferents solution.
+
+dio: Dio this famous package was not our first package because at the beguining we were using http request (native flutter) but we include that one in order to fix somme issue we have Web side.
+
+email_validator: we are using that package to avoid the classic REGEX email issue.
+
+image_picker: we are using this package to simply interact with the phone camera.
+
+
+
+
+
