@@ -49,7 +49,7 @@ class API with ChangeNotifier {
     });
 
     try {
-      final Response<dynamic> data = await dio.post(
+      await dio.post(
         "$endpoint/auth/signup",
         data: body,
         options: Options(
@@ -201,7 +201,8 @@ class API with ChangeNotifier {
             Message(
               content: data.data['conversations'][i]['messages'][j]['content'],
               createdAt: DateTime.parse(
-                  data.data['conversations'][i]['messages'][j]['createdAt']),
+                data.data['conversations'][i]['messages'][j]['createdAt'],
+              ),
               userId: data.data['conversations'][i]['messages'][j]['id'],
             ),
           );
@@ -297,10 +298,13 @@ class API with ChangeNotifier {
     return true;
   }
 
-  void newMessage(
-      {required String conversationId, required String content}) async {
+  void newMessage({
+    required String conversationId,
+    required String content,
+  }) async {
     final String body = jsonEncode(
-        <String, String>{'content': content, 'conversationId': conversationId});
+      <String, String>{'content': content, 'conversationId': conversationId},
+    );
     await dio.post(
       "$endpoint/messages",
       data: body,

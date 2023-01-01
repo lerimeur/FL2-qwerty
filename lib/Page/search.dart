@@ -38,6 +38,9 @@ class _SearchState extends State<Search> {
               child: ListView.builder(
                 itemCount: userList.length,
                 itemBuilder: (BuildContext context, int index) {
+                  final String name =
+                      '${userList[index].firstname} ${userList[index].lastname}';
+
                   if (userList[index].id == context.read<API>().user.id) {
                     return Container();
                   }
@@ -45,7 +48,9 @@ class _SearchState extends State<Search> {
                     height: 50,
                     child: InkWell(
                       onTap: () {
-                        context.read<API>().newConversation(<String>[userList[index].id]).then((dynamic data) {
+                        context.read<API>().newConversation(
+                          <String>[userList[index].id],
+                        ).then((dynamic data) {
                           if (data != null) {
                             Navigator.of(context).pop();
                             context.read<API>().getAllConversations();
@@ -53,15 +58,20 @@ class _SearchState extends State<Search> {
                         });
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(left: defaultPadding, right: defaultPadding),
+                        padding: const EdgeInsets.only(
+                          left: defaultPadding,
+                          right: defaultPadding,
+                        ),
                         child: Row(
                           children: <Widget>[
                             const CircleAvatar(),
-                            const SizedBox(width: 20),
+                            const Spacer(),
                             Text(
-                              '${userList[index].firstname} ${userList[index].lastname}',
+                              name.length > 15
+                                  ? '${name.substring(0, 15)}...'
+                                  : name,
                             ),
-                            const SizedBox(width: 80),
+                            const Spacer(flex: 2),
                             if (context.read<API>().user.type == 'ADMIN')
                               if (!userList[index].banned)
                                 MaterialButton(
@@ -69,10 +79,18 @@ class _SearchState extends State<Search> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   elevation: 2,
-                                  color: Theme.of(context).buttonTheme.colorScheme?.primary,
-                                  textColor: Theme.of(context).textTheme.bodyText1?.color,
+                                  color: Theme.of(context)
+                                      .buttonTheme
+                                      .colorScheme
+                                      ?.primary,
+                                  textColor: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.color,
                                   onPressed: () {
-                                    context.read<API>().banUser(userList[index].id);
+                                    context
+                                        .read<API>()
+                                        .banUser(userList[index].id);
                                   },
                                   child: const Text("Bannir"),
                                 )
@@ -82,10 +100,18 @@ class _SearchState extends State<Search> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   elevation: 2,
-                                  color: Theme.of(context).buttonTheme.colorScheme?.primary,
-                                  textColor: Theme.of(context).textTheme.bodyText1?.color,
+                                  color: Theme.of(context)
+                                      .buttonTheme
+                                      .colorScheme
+                                      ?.primary,
+                                  textColor: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.color,
                                   onPressed: () {
-                                    context.read<API>().unbanUser(userList[index].id);
+                                    context
+                                        .read<API>()
+                                        .unbanUser(userList[index].id);
                                   },
                                   child: const Text("Débannir"),
                                 )
