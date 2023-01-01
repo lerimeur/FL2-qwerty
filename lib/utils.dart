@@ -152,7 +152,7 @@ class API with ChangeNotifier {
   void unbanUser(String id) async {
     try {
       await dio.post(
-        "$endpoint/users/ban/$id",
+        "$endpoint/users/unban/$id",
         options: Options(
           headers: headers,
         ),
