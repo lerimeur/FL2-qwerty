@@ -315,7 +315,13 @@ class API with ChangeNotifier {
       'profilePicture': img,
     });
 
-    final Response<dynamic> response = await dio.patch("$endpoint/users/me", data: body);
+    final Response<dynamic> response = await dio.patch(
+      "$endpoint/users/me",
+      data: body,
+      options: Options(
+        headers: headers,
+      ),
+    );
     if (response.statusCode == 200) {
       user.profilePicture = img;
       notifyListeners();
