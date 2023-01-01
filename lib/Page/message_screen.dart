@@ -34,7 +34,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
     inspect(widget.conv);
     super.initState();
     messageList = widget.conv.messages;
-    // timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
+    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => refresh());
   }
 
   void refresh() {

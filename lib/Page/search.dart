@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fl2_qwerty_messenger/Component/input_text.dart';
 import 'package:fl2_qwerty_messenger/type.dart';
 import 'package:flutter/material.dart';
@@ -38,8 +40,7 @@ class _SearchState extends State<Search> {
               child: ListView.builder(
                 itemCount: userList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final String name =
-                      '${userList[index].firstname} ${userList[index].lastname}';
+                  final String name = '${userList[index].firstname} ${userList[index].lastname}';
 
                   if (userList[index].id == context.read<API>().user.id) {
                     return Container();
@@ -64,12 +65,26 @@ class _SearchState extends State<Search> {
                         ),
                         child: Row(
                           children: <Widget>[
-                            const CircleAvatar(),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              width: 40,
+                              height: 40,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Image.memory(
+                                  const Base64Decoder().convert(userList[index].profilePicture),
+                                  gaplessPlayback: true,
+                                  width: 10,
+                                  height: 10,
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                            ),
                             const SizedBox(width: 20),
                             Text(
-                              name.length > 20
-                                  ? '${name.substring(0, 20)}...'
-                                  : name,
+                              name.length > 20 ? '${name.substring(0, 20)}...' : name,
                             ),
                             const Spacer(flex: 2),
                             if (context.read<API>().user.type == 'ADMIN')
@@ -79,18 +94,10 @@ class _SearchState extends State<Search> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   elevation: 2,
-                                  color: Theme.of(context)
-                                      .buttonTheme
-                                      .colorScheme
-                                      ?.primary,
-                                  textColor: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.color,
+                                  color: Theme.of(context).buttonTheme.colorScheme?.primary,
+                                  textColor: Theme.of(context).textTheme.bodyText1?.color,
                                   onPressed: () {
-                                    context
-                                        .read<API>()
-                                        .banUser(userList[index].id);
+                                    context.read<API>().banUser(userList[index].id);
                                   },
                                   child: const Text("Bannir"),
                                 )
@@ -100,18 +107,10 @@ class _SearchState extends State<Search> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   elevation: 2,
-                                  color: Theme.of(context)
-                                      .buttonTheme
-                                      .colorScheme
-                                      ?.primary,
-                                  textColor: Theme.of(context)
-                                      .textTheme
-                                      .bodyText1
-                                      ?.color,
+                                  color: Theme.of(context).buttonTheme.colorScheme?.primary,
+                                  textColor: Theme.of(context).textTheme.bodyText1?.color,
                                   onPressed: () {
-                                    context
-                                        .read<API>()
-                                        .unbanUser(userList[index].id);
+                                    context.read<API>().unbanUser(userList[index].id);
                                   },
                                   child: const Text("Débannir"),
                                 )
