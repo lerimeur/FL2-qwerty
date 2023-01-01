@@ -20,7 +20,7 @@ class API with ChangeNotifier {
     banned: false,
   );
   late List<Conversation> convlist = <Conversation>[];
-  static const String endpoint = 'http://localhost:8002';
+  static const String endpoint = 'https://flutr.fundy.cf';
 
   late Map<String, String> headers = <String, String>{"Content-Type": "application/json"};
 
