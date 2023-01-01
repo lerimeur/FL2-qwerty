@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:fl2_qwerty_messenger/Page/home.dart';
 import 'package:fl2_qwerty_messenger/Page/profile.dart';

@@ -48,7 +48,7 @@ class API with ChangeNotifier {
     });
 
     try {
-      final Response<dynamic> data = await dio.post(
+      await dio.post(
         "$endpoint/auth/signup",
         data: body,
         options: Options(
@@ -56,19 +56,7 @@ class API with ChangeNotifier {
         ),
       );
 
-      updateCookie(data);
-      user = User(
-        id: data.data['id'],
-        firstname: data.data['firstname'],
-        lastname: data.data['lastname'],
-        profilePicture: data.data['profilePicture'],
-        darkMode: data.data['darkMode'],
-        type: data.data['type'],
-        banned: data.data['banned'],
-      );
-      inspect(user);
-
-      return true;
+      return signup(email, password);
     } catch (e) {
       await Fluttertoast.showToast(
         msg: e is DioError ? e.response?.data['message'] ?? 'error' : 'error',
@@ -317,8 +305,13 @@ class API with ChangeNotifier {
     return true;
   }
 
-  void newMessage({required String conversationId, required String content}) async {
-    final String body = jsonEncode(<String, String>{'content': content, 'conversationId': conversationId});
+  void newMessage({
+    required String conversationId,
+    required String content,
+  }) async {
+    final String body = jsonEncode(
+      <String, String>{'content': content, 'conversationId': conversationId},
+    );
     await dio.post(
       "$endpoint/messages",
       data: body,

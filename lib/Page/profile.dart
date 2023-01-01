@@ -109,12 +109,7 @@ class _ProfilState extends State<Profil> {
           children: <Widget>[
             const Spacer(flex: 2),
             Text(
-              context.watch<API>().user.firstname,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-            ),
-            const Spacer(),
-            Text(
-              context.watch<API>().user.lastname,
+              '${context.watch<API>().user.firstname} ${context.watch<API>().user.lastname}',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             const Spacer(flex: 2),
@@ -164,7 +159,10 @@ class _ProfilState extends State<Profil> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Nom et prénom',
-                      style: TextStyle(fontWeight: FontWeight.normal, fontSize: 17),
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
                   Spacer(),
