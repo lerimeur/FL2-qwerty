@@ -7,8 +7,7 @@ import 'package:provider/provider.dart';
 import '../type.dart';
 
 class ChatInputField extends StatefulWidget {
-  const ChatInputField({Key? key, required this.conv, required this.fct})
-      : super(key: key);
+  const ChatInputField({Key? key, required this.conv, required this.fct}) : super(key: key);
 
   final Function() fct;
   final Conversation conv;
@@ -86,8 +85,9 @@ class _ChatInputFieldState extends State<ChatInputField> {
                 }
 
                 context.read<API>().newMessage(
-                    conversationId: widget.conv.id.toString(),
-                    content: messageValue.text.toString());
+                      conversationId: widget.conv.id.toString(),
+                      content: messageValue.text.toString(),
+                    );
 
                 messageValue.text = "";
                 sleep(const Duration(milliseconds: 1));
