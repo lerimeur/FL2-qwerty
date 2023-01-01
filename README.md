@@ -3,10 +3,10 @@
 ## Getting Started
 
 This project is the starting point of a messenger app.
-With this project you can create an account a discuss with your friends.
+With this project you can create an account and discuss with your friends.
 
 ## For developers
-In order to use the app you can clone the repository execute in your terminal
+In order to use the app you can clone the repository and execute it in your terminal
 
 `flutter run`
 
@@ -22,7 +22,7 @@ You will have a ConvList screen in order to render all of your actual conversati
 
 You will have a Profile screen in order to change the darkmode or your profile picture / firstname lastname.
 
-Moreover you will have a ConvCreation screen in order to as expected create a conversation.
+Moreover you will have a ConvCreation screen in order to, as expected, create a conversation.
 
 
 ## External librairies
@@ -30,7 +30,7 @@ we use few libraries
 
 animated_splash_screen: as the name of the package we use that package in order to have a simple animation on the splash screen we are using that because we didnt have any designer in our team so we found diferents solution.
 
-dio: Dio this famous package was not our first package because at the beguining we were using http request (native flutter) but we include that one in order to fix somme issue we have Web side.
+dio: Dio this famous package was not our first package because at the beginning we were using http request (native flutter) but we include that one in order to fix some issues we had Web side.
 
 email_validator: we are using that package to avoid the classic REGEX email issue.
 
